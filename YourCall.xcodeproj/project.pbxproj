@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B66779E119160ADD0093DDC2 /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = B66779E019160ADD0093DDC2 /* Feed.m */; };
+		B66779E4191616A70093DDC2 /* FeedCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B66779E3191616A70093DDC2 /* FeedCollectionViewCell.m */; };
 		B685D88F1915F2C80016533B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B685D88E1915F2C80016533B /* Foundation.framework */; };
 		B685D8911915F2C80016533B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B685D8901915F2C80016533B /* CoreGraphics.framework */; };
 		B685D8931915F2C80016533B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B685D8921915F2C80016533B /* UIKit.framework */; };
@@ -22,6 +24,8 @@
 		B685D8B31915F2C80016533B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B685D8921915F2C80016533B /* UIKit.framework */; };
 		B685D8BB1915F2C80016533B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B685D8B91915F2C80016533B /* InfoPlist.strings */; };
 		B685D8BD1915F2C80016533B /* YourCallTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B685D8BC1915F2C80016533B /* YourCallTests.m */; };
+		B685D8C81915F3D90016533B /* FeedCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B685D8C71915F3D90016533B /* FeedCollectionViewController.m */; };
+		B685D8CB1915F9D40016533B /* DataRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = B685D8CA1915F9D40016533B /* DataRepository.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +39,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B66779DF19160ADD0093DDC2 /* Feed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Feed.h; sourceTree = "<group>"; };
+		B66779E019160ADD0093DDC2 /* Feed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feed.m; sourceTree = "<group>"; };
+		B66779E2191616A70093DDC2 /* FeedCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedCollectionViewCell.h; sourceTree = "<group>"; };
+		B66779E3191616A70093DDC2 /* FeedCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedCollectionViewCell.m; sourceTree = "<group>"; };
 		B685D88B1915F2C80016533B /* YourCall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YourCall.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B685D88E1915F2C80016533B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B685D8901915F2C80016533B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -55,6 +63,10 @@
 		B685D8B81915F2C80016533B /* YourCallTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "YourCallTests-Info.plist"; sourceTree = "<group>"; };
 		B685D8BA1915F2C80016533B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B685D8BC1915F2C80016533B /* YourCallTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YourCallTests.m; sourceTree = "<group>"; };
+		B685D8C61915F3D90016533B /* FeedCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedCollectionViewController.h; sourceTree = "<group>"; };
+		B685D8C71915F3D90016533B /* FeedCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedCollectionViewController.m; sourceTree = "<group>"; };
+		B685D8C91915F9D40016533B /* DataRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataRepository.h; sourceTree = "<group>"; };
+		B685D8CA1915F9D40016533B /* DataRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataRepository.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,11 +129,19 @@
 				B685D89D1915F2C80016533B /* AppDelegate.h */,
 				B685D89E1915F2C80016533B /* AppDelegate.m */,
 				B685D8A01915F2C80016533B /* Main_iPhone.storyboard */,
+				B66779E2191616A70093DDC2 /* FeedCollectionViewCell.h */,
+				B66779E3191616A70093DDC2 /* FeedCollectionViewCell.m */,
+				B685D8C61915F3D90016533B /* FeedCollectionViewController.h */,
+				B685D8C71915F3D90016533B /* FeedCollectionViewController.m */,
 				B685D8A31915F2C80016533B /* Main_iPad.storyboard */,
 				B685D8A61915F2C80016533B /* ViewController.h */,
 				B685D8A71915F2C80016533B /* ViewController.m */,
 				B685D8A91915F2C80016533B /* Images.xcassets */,
 				B685D8951915F2C80016533B /* Supporting Files */,
+				B685D8C91915F9D40016533B /* DataRepository.h */,
+				B685D8CA1915F9D40016533B /* DataRepository.m */,
+				B66779DF19160ADD0093DDC2 /* Feed.h */,
+				B66779E019160ADD0093DDC2 /* Feed.m */,
 			);
 			path = YourCall;
 			sourceTree = "<group>";
@@ -253,9 +273,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B685D8C81915F3D90016533B /* FeedCollectionViewController.m in Sources */,
 				B685D8A81915F2C80016533B /* ViewController.m in Sources */,
 				B685D89F1915F2C80016533B /* AppDelegate.m in Sources */,
+				B66779E4191616A70093DDC2 /* FeedCollectionViewCell.m in Sources */,
+				B66779E119160ADD0093DDC2 /* Feed.m in Sources */,
 				B685D89B1915F2C80016533B /* main.m in Sources */,
+				B685D8CB1915F9D40016533B /* DataRepository.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,6 +494,7 @@
 				B685D8C21915F2C80016533B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B685D8C31915F2C80016533B /* Build configuration list for PBXNativeTarget "YourCallTests" */ = {
 			isa = XCConfigurationList;
@@ -478,6 +503,7 @@
 				B685D8C51915F2C80016533B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
