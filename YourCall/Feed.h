@@ -7,12 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "FeedService.h"
 
 @interface Feed : NSObject
-@property (nonatomic, strong) NSString* imageUrl;
-@property (nonatomic, strong) UIImage* image;
-@property (nonatomic, strong) NSString* description;
-@property int like;
-@property int dislike;
+typedef enum {None, First, Second} VoteItem;
+
+@property (nonatomic, strong) NSString* imageUrlFirst;
+@property (nonatomic, strong) UIImage* imageFirst;
+@property (nonatomic, strong) NSString* descriptionFirst;
+@property (nonatomic, strong) NSString* imageUrlSecond;
+@property (nonatomic, strong) UIImage* imageSecond;
+@property (nonatomic, strong) NSString* descriptionSecond;
+@property VoteItem votedItem;
 @property int feedId;
+
+- (void) getImageFirst:(void(^)(UIImage*))completionBlock;
+- (void) getImageSecond:(void(^)(UIImage*))completionBlock;
+- (BOOL) voteFirst;
+- (BOOL) voteSecond;
 @end

@@ -8,6 +8,9 @@
 
 #import "FeedCollectionViewCell.h"
 
+@interface FeedCollectionViewCell ()<UIGestureRecognizerDelegate>
+@end
+
 @implementation FeedCollectionViewCell
 
 - (void) setFeed:(Feed *)feed
@@ -15,10 +18,21 @@
     if (_feed != feed) {
         _feed = feed;
     }
-    if (!feed.image) {
-        feed.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:feed.imageUrl]]];
-    }
-    self.imageView.image = feed.image;
+    self.imageViewFirst.image = nil;
+    [feed getImageFirst:^(UIImage* image) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.imageViewFirst.image = feed.imageFirst;
+            [self setNeedsDisplay];
+        });
+    }];
+    
+    self.imageViewSecond.image = nil;
+    [feed getImageSecond:^(UIImage* image) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.imageViewSecond.image = feed.imageSecond;
+            [self setNeedsDisplay];
+        });
+    }];
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -26,10 +40,36 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        _imageView = [[UIImageView alloc] initWithFrame:self.contentView.bounds];
-        [self.contentView addSubview:_imageView];
+        CGRect bounds = self.contentView.bounds;
+        _imageViewFirst = [[UIImageView alloc] initWithFrame:CGRectMake(bounds.origin.x, bounds.origin.y, 200.0f, 200.0f)];
+        _imageViewSecond = [[UIImageView alloc] initWithFrame:CGRectMake(bounds.origin.x, bounds.origin.y + 220, 200.0f, 200.0f)];
+        
+        UITapGestureRecognizer *tapFirstGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedFirstImage:)];
+        UITapGestureRecognizer *tapSecondGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedSecondImage:)];
+        
+        _imageViewFirst.userInteractionEnabled = YES;
+        _imageViewSecond.userInteractionEnabled = YES;
+        
+        _imageViewFirst.contentMode = UIViewContentModeScaleToFill;
+        _imageViewSecond.contentMode = UIViewContentModeScaleToFill;
+        
+        [_imageViewFirst addGestureRecognizer:tapFirstGR];
+        [_imageViewSecond addGestureRecognizer:tapSecondGR];
+        
+        [self.contentView addSubview:_imageViewFirst];
+        [self.contentView addSubview:_imageViewSecond];
     }
     return self;
+}
+
+- (void)tappedFirstImage:(UITapGestureRecognizer *)recognizer
+{
+    [self.delegate tappedFirstImage:recognizer];
+}
+
+- (void)tappedSecondImage:(UITapGestureRecognizer *)recognizer
+{
+    [self.delegate tappedSecondImage:recognizer];
 }
 
 /*

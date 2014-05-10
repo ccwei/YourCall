@@ -7,7 +7,6 @@
 //
 
 #import "FeedCollectionViewController.h"
-#import "FeedCollectionViewCell.h"
 
 @interface FeedCollectionViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 @property (nonatomic, strong) DataRepository *repository;
@@ -25,7 +24,7 @@
 
 - (void) awakeFromNib
 {
-    [self.repository getAllFeeds: ^(NSArray *feeds) {
+    [self.repository allFeeds: ^(NSArray *feeds) {
         [self.collectionView reloadData];
     }];
 }
@@ -74,39 +73,58 @@
     FeedCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"FeedCell" forIndexPath:indexPath];
     cell.feed = self.repository.feeds[indexPath.row];
     cell.backgroundColor = [UIColor whiteColor];
+    cell.delegate = self;
     return cell;
 }
-
-/*- (UICollectionReusableView *)collectionView:
- (UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
- {
- return [[UICollectionReusableView alloc] init];
- }*/
 
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     // TODO: Select Item
 }
-- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+{
     // TODO: Deselect item
 }
 
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    Feed *feed = self.repository.feeds[indexPath.row];
-    UIImage *image = [UIImage imageWithContentsOfFile:feed.imageUrl];
-
-    CGSize retval = image.size.width > 0 ? image.size : CGSizeMake(200, 200);
-    retval.height += 100; retval.width += 100; return retval;
-    return retval;
+    return self.collectionView.frame.size;
 }
 
-- (UIEdgeInsets)collectionView:
-(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+
+- (void)tappedFirstImage:(UITapGestureRecognizer *)recognizer
 {
-    return UIEdgeInsetsMake(50, 20, 50, 20);
+    CGPoint location = [recognizer locationInView:self.collectionView];
+    NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:location];
+    FeedCollectionViewCell *selectedCell = (FeedCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+    
+    if ([selectedCell.feed voteFirst]) {
+        selectedCell.imageViewFirst.layer.masksToBounds = YES;
+        [selectedCell.imageViewFirst.layer setBackgroundColor:[[UIColor redColor] CGColor]];
+        [selectedCell.imageViewFirst.layer setBorderWidth:4.0];
+        [selectedCell.imageViewSecond.layer setBorderWidth:0];
+    } else {
+        [selectedCell.imageViewFirst.layer setBorderWidth:0];
+    }
 }
+
+- (void)tappedSecondImage:(UITapGestureRecognizer *)recognizer
+{
+    CGPoint location = [recognizer locationInView:self.collectionView];
+    NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:location];
+    FeedCollectionViewCell *selectedCell = (FeedCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+    if ([selectedCell.feed voteSecond]) {
+        selectedCell.imageViewSecond.layer.masksToBounds = YES;
+        [selectedCell.imageViewSecond.layer setBackgroundColor:[[UIColor redColor] CGColor]];
+        [selectedCell.imageViewSecond.layer setBorderWidth:4.0];
+        [selectedCell.imageViewFirst.layer setBorderWidth:0];
+    } else {
+        [selectedCell.imageViewSecond.layer setBorderWidth:0];
+    }
+}
+
 
 @end

@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "Feed.h"
+#import "FeedService.h"
 
 @interface DataRepository : NSObject
-@property (nonatomic, strong) NSMutableArray *feeds;
-- (void) getAllFeeds: (void (^)(NSArray *))completionBlock;
+@property (nonatomic, strong) NSArray *feeds;
+- (void) allFeeds: (void (^)(NSArray *))completionBlock;
 @end

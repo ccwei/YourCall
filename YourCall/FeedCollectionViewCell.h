@@ -8,8 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "Feed.h"
+#import "FeedService.h"
+
+@protocol FeedCollectionViewCellProtocol <NSObject>
+- (void)tappedFirstImage:(UITapGestureRecognizer *)recognizer;
+- (void)tappedSecondImage:(UITapGestureRecognizer *)recognizer;
+@end
 
 @interface FeedCollectionViewCell : UICollectionViewCell
-@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UIImageView *imageViewFirst;
+@property (nonatomic, strong) UIImageView *imageViewSecond;
 @property (nonatomic, strong) Feed *feed;
+@property (nonatomic, assign) id<FeedCollectionViewCellProtocol> delegate;
 @end

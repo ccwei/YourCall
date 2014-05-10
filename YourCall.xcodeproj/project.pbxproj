@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		B66779E119160ADD0093DDC2 /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = B66779E019160ADD0093DDC2 /* Feed.m */; };
 		B66779E4191616A70093DDC2 /* FeedCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B66779E3191616A70093DDC2 /* FeedCollectionViewCell.m */; };
+		B66779E7191727350093DDC2 /* FeedService.m in Sources */ = {isa = PBXBuildFile; fileRef = B66779E6191727350093DDC2 /* FeedService.m */; };
 		B685D88F1915F2C80016533B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B685D88E1915F2C80016533B /* Foundation.framework */; };
 		B685D8911915F2C80016533B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B685D8901915F2C80016533B /* CoreGraphics.framework */; };
 		B685D8931915F2C80016533B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B685D8921915F2C80016533B /* UIKit.framework */; };
@@ -43,6 +44,8 @@
 		B66779E019160ADD0093DDC2 /* Feed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feed.m; sourceTree = "<group>"; };
 		B66779E2191616A70093DDC2 /* FeedCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedCollectionViewCell.h; sourceTree = "<group>"; };
 		B66779E3191616A70093DDC2 /* FeedCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedCollectionViewCell.m; sourceTree = "<group>"; };
+		B66779E5191727350093DDC2 /* FeedService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedService.h; sourceTree = "<group>"; };
+		B66779E6191727350093DDC2 /* FeedService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedService.m; sourceTree = "<group>"; };
 		B685D88B1915F2C80016533B /* YourCall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YourCall.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B685D88E1915F2C80016533B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B685D8901915F2C80016533B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -140,6 +143,8 @@
 				B685D8951915F2C80016533B /* Supporting Files */,
 				B685D8C91915F9D40016533B /* DataRepository.h */,
 				B685D8CA1915F9D40016533B /* DataRepository.m */,
+				B66779E5191727350093DDC2 /* FeedService.h */,
+				B66779E6191727350093DDC2 /* FeedService.m */,
 				B66779DF19160ADD0093DDC2 /* Feed.h */,
 				B66779E019160ADD0093DDC2 /* Feed.m */,
 			);
@@ -278,6 +283,7 @@
 				B685D89F1915F2C80016533B /* AppDelegate.m in Sources */,
 				B66779E4191616A70093DDC2 /* FeedCollectionViewCell.m in Sources */,
 				B66779E119160ADD0093DDC2 /* Feed.m in Sources */,
+				B66779E7191727350093DDC2 /* FeedService.m in Sources */,
 				B685D89B1915F2C80016533B /* main.m in Sources */,
 				B685D8CB1915F9D40016533B /* DataRepository.m in Sources */,
 			);
@@ -417,6 +423,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "YourCall/YourCall-Prefix.pch";
 				INFOPLIST_FILE = "YourCall/YourCall-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -430,6 +437,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "YourCall/YourCall-Prefix.pch";
 				INFOPLIST_FILE = "YourCall/YourCall-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
