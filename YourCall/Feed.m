@@ -21,12 +21,16 @@
             UIGraphicsEndImageContext();
             
             if (completionBlock) {
-                completionBlock(_imageFirst);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completionBlock(_imageFirst);
+                });
             }
         });
     } else {
         if (completionBlock) {
-            completionBlock(_imageFirst);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completionBlock(_imageFirst);
+            });
         }
     }
 }
@@ -57,18 +61,21 @@
 {
     switch (self.votedItem) {
         case None:
-            [FeedService voteFirst: self.feedId];
+            [FeedService voteFirst: self.feedId completionBlock:nil];
             self.votedItem = First;
             return YES;
         case First:
-            [FeedService unvoteFirst: self.feedId];
+            [FeedService unvoteFirst: self.feedId completionBlock:nil];
             self.votedItem = None;
             return NO;
         case Second:
-            [FeedService unvoteSecond: self.feedId];
-            [FeedService voteFirst: self.feedId];
+        {
+            [FeedService unvoteSecond: self.feedId completionBlock:^{
+                [FeedService voteFirst: self.feedId completionBlock: nil];
+            }];
             self.votedItem = First;
             return YES;
+        }
         default:
             break;
     }
@@ -78,20 +85,28 @@
 {
     switch (self.votedItem) {
         case None:
-            [FeedService voteSecond: self.feedId];
+            [FeedService voteSecond: self.feedId completionBlock:nil];
             self.votedItem = Second;
             return YES;
         case First:
-            [FeedService unvoteFirst: self.feedId];
-            [FeedService voteSecond: self.feedId];
+        {
+            [FeedService unvoteFirst: self.feedId completionBlock:^{
+                [FeedService voteSecond: self.feedId completionBlock:nil];
+            }];
             self.votedItem = Second;
             return YES;
+        }
         case Second:
-            [FeedService unvoteSecond: self.feedId];
+            [FeedService unvoteSecond: self.feedId completionBlock:nil];
             self.votedItem = None;
             return NO;
         default:
             break;
     }
+}
+
+- (void)save
+{
+    [FeedService createFeed:self];
 }
 @end

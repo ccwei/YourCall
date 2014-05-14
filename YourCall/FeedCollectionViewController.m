@@ -7,24 +7,18 @@
 //
 
 #import "FeedCollectionViewController.h"
+#import "FeedCompositionView.h"
 
 @interface FeedCollectionViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
-@property (nonatomic, strong) DataRepository *repository;
+@property (nonatomic, strong) NSArray *feeds;
 @end
 
 @implementation FeedCollectionViewController
 
-- (DataRepository *)repository
-{
-    if (!_repository) {
-        _repository = [[DataRepository alloc] init];
-    }
-    return _repository;
-}
-
 - (void) awakeFromNib
 {
-    [self.repository allFeeds: ^(NSArray *feeds) {
+    [[DataRepository sharedManager] allFeeds: ^(NSArray *feeds) {
+        self.feeds = feeds;
         [self.collectionView reloadData];
     }];
 }
@@ -42,6 +36,8 @@
 {
     [super viewDidLoad];
     [self.collectionView registerClass:[FeedCollectionViewCell class] forCellWithReuseIdentifier:@"FeedCell"];
+    
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
     // Do any additional setup after loading the view.
 }
 
@@ -65,13 +61,13 @@
 #pragma mark - UICollectionView Datasource
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
-    return [self.repository.feeds count];
+    return [self.feeds count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     FeedCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"FeedCell" forIndexPath:indexPath];
-    cell.feed = self.repository.feeds[indexPath.row];
+    cell.feed = self.feeds[indexPath.row];
     cell.backgroundColor = [UIColor whiteColor];
     cell.delegate = self;
     return cell;
@@ -126,5 +122,31 @@
     }
 }
 
+- (IBAction)unwindToFeedCollectionViewController:(UIStoryboardSegue *)unwindSegue
+{
+    UIViewController* sourceViewController = unwindSegue.sourceViewController;
+
+    if ([sourceViewController isKindOfClass:[CreateNewViewController class]]) {
+        CreateNewViewController *vc = (CreateNewViewController *)sourceViewController;
+        if (vc.isCanceled) {
+            return;
+        }
+        FeedCompositionView *firstView = vc.feedCompositionViews[0];
+        FeedCompositionView *secondView = vc.feedCompositionViews[1];
+        
+        Feed *feed = [[Feed alloc] init];
+        feed.imageFirst = firstView.imageView.image;
+        feed.imageSecond = secondView.imageView.image;
+        feed.descriptionFirst = firstView.textView.text;
+        feed.descriptionSecond = secondView.textView.text;
+        [feed save];
+    }
+    
+}
+- (IBAction)refresh:(id)sender {
+    [[DataRepository sharedManager] allFeeds: ^(NSArray *feeds) {
+        [self.collectionView reloadData];
+    }];
+}
 
 @end

@@ -11,6 +11,9 @@
 #import "FeedService.h"
 
 @interface DataRepository : NSObject
-@property (nonatomic, strong) NSArray *feeds;
+@property (nonatomic, strong) NSArray *allFeeds;
+@property (nonatomic, strong) NSArray *myFeeds;
 - (void) allFeeds: (void (^)(NSArray *))completionBlock;
+- (void) myFeeds: (void (^)(NSArray *))completionBlock;
++ (DataRepository *)sharedManager;
 @end

@@ -7,8 +7,14 @@
 //
 
 #import "AppDelegate.h"
+#import "ECSlidingViewController.h"
 
 @implementation AppDelegate
+
+- (ECSlidingViewController *)getSideingViewController
+{
+    return (ECSlidingViewController*) self.window.rootViewController;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

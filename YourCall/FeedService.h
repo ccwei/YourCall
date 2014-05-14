@@ -8,11 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "Feed.h"
+@class Feed;
 
 @interface FeedService : NSObject
-+ (void) getAllFeeds: (void (^)(NSArray *))completionBlock;
-+ (void)voteFirst: (int) feedId;
-+ (void)voteSecond: (int) feedId;
-+ (void)unvoteFirst: (int) feedId;
-+ (void)unvoteSecond: (int) feedId;
++ (void)getAllFeeds: (void (^)(NSArray *))completionBlock;
++ (void)getMyFeeds: (void (^)(NSArray *))completionBlock;
++ (void)voteFirst: (int) feedId completionBlock:(void (^)())completionBlock;
++ (void)voteSecond: (int) feedId completionBlock:(void (^)())completionBlock;
++ (void)unvoteFirst: (int) feedId completionBlock:(void (^)())completionBlock;
++ (void)unvoteSecond: (int) feedId completionBlock:(void (^)())completionBlock;
++ (void)createFeed:(Feed *) feed;
 @end

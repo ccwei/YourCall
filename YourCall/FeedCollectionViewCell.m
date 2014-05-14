@@ -20,19 +20,18 @@
     }
     self.imageViewFirst.image = nil;
     [feed getImageFirst:^(UIImage* image) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.imageViewFirst.image = feed.imageFirst;
-            [self setNeedsDisplay];
-        });
+        self.imageViewFirst.image = image;
+        [self setNeedsDisplay];
     }];
     
     self.imageViewSecond.image = nil;
     [feed getImageSecond:^(UIImage* image) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.imageViewSecond.image = feed.imageSecond;
-            [self setNeedsDisplay];
-        });
+        self.imageViewSecond.image = image;
+        [self setNeedsDisplay];
     }];
+    
+    self.textViewFirst.text = feed.descriptionFirst;
+    self.textViewSecond.text = feed.descriptionSecond;
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -43,12 +42,19 @@
         CGRect bounds = self.contentView.bounds;
         _imageViewFirst = [[UIImageView alloc] initWithFrame:CGRectMake(bounds.origin.x, bounds.origin.y, 200.0f, 200.0f)];
         _imageViewSecond = [[UIImageView alloc] initWithFrame:CGRectMake(bounds.origin.x, bounds.origin.y + 220, 200.0f, 200.0f)];
+        _textViewFirst = [[UITextView alloc] initWithFrame:CGRectMake(bounds.origin.x, bounds.origin.y, 200.0f, 200.0f)];
+        _textViewSecond = [[UITextView alloc] initWithFrame:CGRectMake(bounds.origin.x, bounds.origin.y + 220, 200.0f, 200.0f)];
         
         UITapGestureRecognizer *tapFirstGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedFirstImage:)];
         UITapGestureRecognizer *tapSecondGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedSecondImage:)];
         
         _imageViewFirst.userInteractionEnabled = YES;
         _imageViewSecond.userInteractionEnabled = YES;
+        
+        _textViewFirst.editable = NO;
+        _textViewFirst.backgroundColor = [UIColor clearColor];
+        _textViewSecond.editable = NO;
+        _textViewSecond.backgroundColor = [UIColor clearColor];
         
         _imageViewFirst.contentMode = UIViewContentModeScaleToFill;
         _imageViewSecond.contentMode = UIViewContentModeScaleToFill;
@@ -57,7 +63,9 @@
         [_imageViewSecond addGestureRecognizer:tapSecondGR];
         
         [self.contentView addSubview:_imageViewFirst];
+        [self.contentView addSubview:_textViewFirst];
         [self.contentView addSubview:_imageViewSecond];
+        [self.contentView addSubview:_textViewSecond];
     }
     return self;
 }

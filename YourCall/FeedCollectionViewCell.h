@@ -18,6 +18,8 @@
 @interface FeedCollectionViewCell : UICollectionViewCell
 @property (nonatomic, strong) UIImageView *imageViewFirst;
 @property (nonatomic, strong) UIImageView *imageViewSecond;
+@property (nonatomic, strong) UITextView *textViewFirst;
+@property (nonatomic, strong) UITextView *textViewSecond;
 @property (nonatomic, strong) Feed *feed;
 @property (nonatomic, assign) id<FeedCollectionViewCellProtocol> delegate;
 @end

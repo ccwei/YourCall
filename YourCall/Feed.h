@@ -18,6 +18,8 @@ typedef enum {None, First, Second} VoteItem;
 @property (nonatomic, strong) NSString* imageUrlSecond;
 @property (nonatomic, strong) UIImage* imageSecond;
 @property (nonatomic, strong) NSString* descriptionSecond;
+@property int numberOfVoteFirst;
+@property int numberOfVoteSecond;
 @property VoteItem votedItem;
 @property int feedId;
 
@@ -25,4 +27,5 @@ typedef enum {None, First, Second} VoteItem;
 - (void) getImageSecond:(void(^)(UIImage*))completionBlock;
 - (BOOL) voteFirst;
 - (BOOL) voteSecond;
+- (void) save;
 @end

@@ -13,18 +13,36 @@
 
 @implementation DataRepository
 
--(NSArray *)feeds
-{
-    if (!_feeds) {
-        _feeds = [[NSArray alloc] init];
+- (id)init {
+    if (self = [super init]) {
+        _allFeeds = [[NSArray alloc] init];
     }
-    return _feeds;
+    return self;
+}
+
+
++ (DataRepository *)sharedManager
+{
+    static DataRepository *sharedMyManager = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedMyManager = [[self alloc] init];
+    });
+    return sharedMyManager;
 }
 
 - (void) allFeeds: (void (^)(NSArray *))completionBlock
 {
     [FeedService getAllFeeds:^(NSArray *feeds) {
-        self.feeds = feeds;
+        self.allFeeds = feeds;
+        completionBlock(feeds);
+    }];
+}
+
+- (void) myFeeds: (void (^)(NSArray *))completionBlock
+{
+    [FeedService getMyFeeds:^(NSArray *feeds) {
+        self.myFeeds = feeds;
         completionBlock(feeds);
     }];
 }
