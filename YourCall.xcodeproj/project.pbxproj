@@ -10,14 +10,13 @@
 		14DF48EE2FB942B9A2EADEF4 /* libPods-YourCall.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 20C7670A8EC84AD0A1CBA987 /* libPods-YourCall.a */; };
 		B616D3FB191ECBA100E97162 /* placeholder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B616D3FA191ECBA100E97162 /* placeholder.jpg */; };
 		B62D297C191F43B000BA9273 /* MenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B62D297B191F43B000BA9273 /* MenuTableViewController.m */; };
-		B62D297F191F4B4E00BA9273 /* FeedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B62D297E191F4B4E00BA9273 /* FeedTableViewCell.m */; };
 		B62D29821920257200BA9273 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B62D29811920257200BA9273 /* SignInViewController.m */; };
 		B62D2985192027B300BA9273 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B62D2984192027B300BA9273 /* SignUpViewController.m */; };
 		B62D298919202D4700BA9273 /* RegistrationService.m in Sources */ = {isa = PBXBuildFile; fileRef = B62D298819202D4700BA9273 /* RegistrationService.m */; };
 		B6300F521922E76700BFC417 /* FeedCompositionView.m in Sources */ = {isa = PBXBuildFile; fileRef = B6300F511922E76700BFC417 /* FeedCompositionView.m */; };
 		B6300F541922E7E600BFC417 /* FeedCompositionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6300F531922E7E600BFC417 /* FeedCompositionView.xib */; };
 		B6300F561922EBA700BFC417 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = B6300F551922EBA700BFC417 /* camera.png */; };
-		B633FE39191EC5A1003E6EC2 /* CreateNewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B633FE38191EC5A1003E6EC2 /* CreateNewViewController.m */; };
+		B633FE39191EC5A1003E6EC2 /* CreateNewFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B633FE38191EC5A1003E6EC2 /* CreateNewFeedViewController.m */; };
 		B66779E119160ADD0093DDC2 /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = B66779E019160ADD0093DDC2 /* Feed.m */; };
 		B66779E4191616A70093DDC2 /* FeedCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B66779E3191616A70093DDC2 /* FeedCollectionViewCell.m */; };
 		B66779E7191727350093DDC2 /* FeedService.m in Sources */ = {isa = PBXBuildFile; fileRef = B66779E6191727350093DDC2 /* FeedService.m */; };
@@ -38,6 +37,10 @@
 		B685D8C81915F3D90016533B /* FeedCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B685D8C71915F3D90016533B /* FeedCollectionViewController.m */; };
 		B685D8CB1915F9D40016533B /* DataRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = B685D8CA1915F9D40016533B /* DataRepository.m */; };
 		B6ACCCC2191F0322003489A9 /* MyFeedsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6ACCCC1191F0322003489A9 /* MyFeedsTableViewController.m */; };
+		B6E04E2519247C9100D9A3CF /* segoeui-light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B6E04E2219247C9100D9A3CF /* segoeui-light.ttf */; };
+		B6E04E2619247C9100D9A3CF /* segoeui-semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B6E04E2319247C9100D9A3CF /* segoeui-semibold.ttf */; };
+		B6E04E2719247C9100D9A3CF /* segoeui-semilight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B6E04E2419247C9100D9A3CF /* segoeui-semilight.ttf */; };
+		B6E04E2D1924906C00D9A3CF /* CollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6E04E2C1924906C00D9A3CF /* CollectionViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,8 +58,6 @@
 		B616D3FA191ECBA100E97162 /* placeholder.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = placeholder.jpg; sourceTree = "<group>"; };
 		B62D297A191F43B000BA9273 /* MenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTableViewController.h; sourceTree = "<group>"; };
 		B62D297B191F43B000BA9273 /* MenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTableViewController.m; sourceTree = "<group>"; };
-		B62D297D191F4B4E00BA9273 /* FeedTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedTableViewCell.h; sourceTree = "<group>"; };
-		B62D297E191F4B4E00BA9273 /* FeedTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedTableViewCell.m; sourceTree = "<group>"; };
 		B62D29801920257200BA9273 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
 		B62D29811920257200BA9273 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
 		B62D2983192027B300BA9273 /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
@@ -67,8 +68,8 @@
 		B6300F511922E76700BFC417 /* FeedCompositionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedCompositionView.m; sourceTree = "<group>"; };
 		B6300F531922E7E600BFC417 /* FeedCompositionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedCompositionView.xib; sourceTree = "<group>"; };
 		B6300F551922EBA700BFC417 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
-		B633FE37191EC5A1003E6EC2 /* CreateNewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateNewViewController.h; sourceTree = "<group>"; };
-		B633FE38191EC5A1003E6EC2 /* CreateNewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateNewViewController.m; sourceTree = "<group>"; };
+		B633FE37191EC5A1003E6EC2 /* CreateNewFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateNewFeedViewController.h; sourceTree = "<group>"; };
+		B633FE38191EC5A1003E6EC2 /* CreateNewFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateNewFeedViewController.m; sourceTree = "<group>"; };
 		B66779DF19160ADD0093DDC2 /* Feed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Feed.h; sourceTree = "<group>"; };
 		B66779E019160ADD0093DDC2 /* Feed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feed.m; sourceTree = "<group>"; };
 		B66779E2191616A70093DDC2 /* FeedCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedCollectionViewCell.h; sourceTree = "<group>"; };
@@ -99,6 +100,10 @@
 		B685D8CA1915F9D40016533B /* DataRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataRepository.m; sourceTree = "<group>"; };
 		B6ACCCC0191F0322003489A9 /* MyFeedsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFeedsTableViewController.h; sourceTree = "<group>"; };
 		B6ACCCC1191F0322003489A9 /* MyFeedsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyFeedsTableViewController.m; sourceTree = "<group>"; };
+		B6E04E2219247C9100D9A3CF /* segoeui-light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "segoeui-light.ttf"; sourceTree = "<group>"; };
+		B6E04E2319247C9100D9A3CF /* segoeui-semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "segoeui-semibold.ttf"; sourceTree = "<group>"; };
+		B6E04E2419247C9100D9A3CF /* segoeui-semilight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "segoeui-semilight.ttf"; sourceTree = "<group>"; };
+		B6E04E2C1924906C00D9A3CF /* CollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollectionViewCell.xib; sourceTree = "<group>"; };
 		E5FBDEA1925C4E75A700DEFE /* Pods-YourCall.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YourCall.xcconfig"; path = "Pods/Pods-YourCall.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -127,9 +132,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B60CC2F5192329F600AD2107 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B685D8C91915F9D40016533B /* DataRepository.h */,
+				B685D8CA1915F9D40016533B /* DataRepository.m */,
+				B66779DF19160ADD0093DDC2 /* Feed.h */,
+				B66779E019160ADD0093DDC2 /* Feed.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		B60CC2F619232A0900AD2107 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B66779E5191727350093DDC2 /* FeedService.h */,
+				B66779E6191727350093DDC2 /* FeedService.m */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		B60CC2F719232A3700AD2107 /* Composition */ = {
+			isa = PBXGroup;
+			children = (
+				B6300F531922E7E600BFC417 /* FeedCompositionView.xib */,
+				B6300F501922E76700BFC417 /* FeedCompositionView.h */,
+				B6300F511922E76700BFC417 /* FeedCompositionView.m */,
+				B633FE37191EC5A1003E6EC2 /* CreateNewFeedViewController.h */,
+				B633FE38191EC5A1003E6EC2 /* CreateNewFeedViewController.m */,
+			);
+			name = Composition;
+			sourceTree = "<group>";
+		};
 		B616D3F9191ECB8800E97162 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B6E04E2219247C9100D9A3CF /* segoeui-light.ttf */,
+				B6E04E2319247C9100D9A3CF /* segoeui-semibold.ttf */,
+				B6E04E2419247C9100D9A3CF /* segoeui-semilight.ttf */,
 				B6300F551922EBA700BFC417 /* camera.png */,
 				B616D3FA191ECBA100E97162 /* placeholder.jpg */,
 			);
@@ -191,36 +231,27 @@
 		B685D8941915F2C80016533B /* YourCall */ = {
 			isa = PBXGroup;
 			children = (
+				B60CC2F719232A3700AD2107 /* Composition */,
+				B60CC2F619232A0900AD2107 /* Services */,
+				B60CC2F5192329F600AD2107 /* Models */,
 				B6300F57192323E500BFC417 /* External */,
 				B62D2986192027BC00BA9273 /* Registration */,
 				B616D3F9191ECB8800E97162 /* Resources */,
+				B685D8A01915F2C80016533B /* Main_iPhone.storyboard */,
 				B685D89D1915F2C80016533B /* AppDelegate.h */,
 				B685D89E1915F2C80016533B /* AppDelegate.m */,
-				B685D8A01915F2C80016533B /* Main_iPhone.storyboard */,
-				B6300F531922E7E600BFC417 /* FeedCompositionView.xib */,
-				B6300F501922E76700BFC417 /* FeedCompositionView.h */,
-				B6300F511922E76700BFC417 /* FeedCompositionView.m */,
-				B633FE37191EC5A1003E6EC2 /* CreateNewViewController.h */,
-				B633FE38191EC5A1003E6EC2 /* CreateNewViewController.m */,
 				B66779E2191616A70093DDC2 /* FeedCollectionViewCell.h */,
 				B66779E3191616A70093DDC2 /* FeedCollectionViewCell.m */,
 				B685D8C61915F3D90016533B /* FeedCollectionViewController.h */,
 				B685D8C71915F3D90016533B /* FeedCollectionViewController.m */,
-				B685D8A31915F2C80016533B /* Main_iPad.storyboard */,
-				B685D8A91915F2C80016533B /* Images.xcassets */,
-				B685D8951915F2C80016533B /* Supporting Files */,
-				B685D8C91915F9D40016533B /* DataRepository.h */,
-				B685D8CA1915F9D40016533B /* DataRepository.m */,
-				B66779E5191727350093DDC2 /* FeedService.h */,
-				B66779E6191727350093DDC2 /* FeedService.m */,
-				B66779DF19160ADD0093DDC2 /* Feed.h */,
-				B66779E019160ADD0093DDC2 /* Feed.m */,
-				B62D297D191F4B4E00BA9273 /* FeedTableViewCell.h */,
-				B62D297E191F4B4E00BA9273 /* FeedTableViewCell.m */,
+				B6E04E2C1924906C00D9A3CF /* CollectionViewCell.xib */,
 				B6ACCCC0191F0322003489A9 /* MyFeedsTableViewController.h */,
 				B6ACCCC1191F0322003489A9 /* MyFeedsTableViewController.m */,
 				B62D297A191F43B000BA9273 /* MenuTableViewController.h */,
 				B62D297B191F43B000BA9273 /* MenuTableViewController.m */,
+				B685D8A31915F2C80016533B /* Main_iPad.storyboard */,
+				B685D8A91915F2C80016533B /* Images.xcassets */,
+				B685D8951915F2C80016533B /* Supporting Files */,
 			);
 			path = YourCall;
 			sourceTree = "<group>";
@@ -332,12 +363,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6E04E2719247C9100D9A3CF /* segoeui-semilight.ttf in Resources */,
 				B685D8A51915F2C80016533B /* Main_iPad.storyboard in Resources */,
 				B6300F561922EBA700BFC417 /* camera.png in Resources */,
 				B6300F541922E7E600BFC417 /* FeedCompositionView.xib in Resources */,
 				B685D8AA1915F2C80016533B /* Images.xcassets in Resources */,
 				B685D8A21915F2C80016533B /* Main_iPhone.storyboard in Resources */,
+				B6E04E2619247C9100D9A3CF /* segoeui-semibold.ttf in Resources */,
+				B6E04E2D1924906C00D9A3CF /* CollectionViewCell.xib in Resources */,
 				B616D3FB191ECBA100E97162 /* placeholder.jpg in Resources */,
+				B6E04E2519247C9100D9A3CF /* segoeui-light.ttf in Resources */,
 				B685D8991915F2C80016533B /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -391,10 +426,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B685D8C81915F3D90016533B /* FeedCollectionViewController.m in Sources */,
-				B62D297F191F4B4E00BA9273 /* FeedTableViewCell.m in Sources */,
 				B6300F521922E76700BFC417 /* FeedCompositionView.m in Sources */,
 				B685D89F1915F2C80016533B /* AppDelegate.m in Sources */,
-				B633FE39191EC5A1003E6EC2 /* CreateNewViewController.m in Sources */,
+				B633FE39191EC5A1003E6EC2 /* CreateNewFeedViewController.m in Sources */,
 				B62D29821920257200BA9273 /* SignInViewController.m in Sources */,
 				B66779E4191616A70093DDC2 /* FeedCollectionViewCell.m in Sources */,
 				B62D297C191F43B000BA9273 /* MenuTableViewController.m in Sources */,

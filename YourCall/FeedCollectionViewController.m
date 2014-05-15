@@ -35,7 +35,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.collectionView registerClass:[FeedCollectionViewCell class] forCellWithReuseIdentifier:@"FeedCell"];
+    UINib *cellNib = [UINib nibWithNibName:@"FeedViewCell" bundle:nil];
+    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"Cell"];
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     // Do any additional setup after loading the view.
@@ -64,9 +65,9 @@
     return [self.feeds count];
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
+- (FeedCollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    FeedCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"FeedCell" forIndexPath:indexPath];
+    FeedCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     cell.feed = self.feeds[indexPath.row];
     cell.backgroundColor = [UIColor whiteColor];
     cell.delegate = self;
@@ -126,8 +127,8 @@
 {
     UIViewController* sourceViewController = unwindSegue.sourceViewController;
 
-    if ([sourceViewController isKindOfClass:[CreateNewViewController class]]) {
-        CreateNewViewController *vc = (CreateNewViewController *)sourceViewController;
+    if ([sourceViewController isKindOfClass:[CreateNewFeedViewController class]]) {
+        CreateNewFeedViewController *vc = (CreateNewFeedViewController *)sourceViewController;
         if (vc.isCanceled) {
             return;
         }

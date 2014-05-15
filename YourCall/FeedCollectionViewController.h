@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "FeedCollectionViewCell.h"
 #import "DataRepository.h"
-#import "CreateNewViewController.h"
+#import "CreateNewFeedViewController.h"
 
 @interface FeedCollectionViewController : UICollectionViewController<FeedCollectionViewCellProtocol>
 

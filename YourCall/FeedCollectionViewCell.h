@@ -16,10 +16,13 @@
 @end
 
 @interface FeedCollectionViewCell : UICollectionViewCell
-@property (nonatomic, strong) UIImageView *imageViewFirst;
-@property (nonatomic, strong) UIImageView *imageViewSecond;
-@property (nonatomic, strong) UITextView *textViewFirst;
-@property (nonatomic, strong) UITextView *textViewSecond;
+@property (weak, nonatomic) IBOutlet UIView *firstView;
+@property (weak, nonatomic) IBOutlet UIView *secondView;
+
+@property (nonatomic, weak) IBOutlet UIImageView *imageViewFirst;
+@property (nonatomic, weak) IBOutlet UIImageView *imageViewSecond;
+@property (nonatomic, weak) IBOutlet UITextView *textViewFirst;
+@property (nonatomic, weak) IBOutlet UITextView *textViewSecond;
 @property (nonatomic, strong) Feed *feed;
 @property (nonatomic, assign) id<FeedCollectionViewCellProtocol> delegate;
 @end

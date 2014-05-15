@@ -34,48 +34,39 @@
     self.textViewSecond.text = feed.descriptionSecond;
 }
 
+- (void)awakeFromNib
+{
+    _textViewFirst.textColor = [UIColor whiteColor];
+    _textViewFirst.backgroundColor = [UIColor clearColor];
+ 
+    _textViewSecond.textColor = [UIColor whiteColor];
+    _textViewSecond.backgroundColor = [UIColor clearColor];
+    
+    _imageViewFirst.contentMode = UIViewContentModeScaleAspectFill;
+    _imageViewSecond.contentMode = UIViewContentModeScaleAspectFill;
+    
+    UITapGestureRecognizer *tapFirstGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedFirstImage:)];
+    UITapGestureRecognizer *tapSecondGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedSecondImage:)];
+    
+    [_firstView addGestureRecognizer:tapFirstGR];
+    [_secondView addGestureRecognizer:tapSecondGR];
+}
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        CGRect bounds = self.contentView.bounds;
-        _imageViewFirst = [[UIImageView alloc] initWithFrame:CGRectMake(bounds.origin.x, bounds.origin.y, 200.0f, 200.0f)];
-        _imageViewSecond = [[UIImageView alloc] initWithFrame:CGRectMake(bounds.origin.x, bounds.origin.y + 220, 200.0f, 200.0f)];
-        _textViewFirst = [[UITextView alloc] initWithFrame:CGRectMake(bounds.origin.x, bounds.origin.y, 200.0f, 200.0f)];
-        _textViewSecond = [[UITextView alloc] initWithFrame:CGRectMake(bounds.origin.x, bounds.origin.y + 220, 200.0f, 200.0f)];
-        
-        UITapGestureRecognizer *tapFirstGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedFirstImage:)];
-        UITapGestureRecognizer *tapSecondGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedSecondImage:)];
-        
-        _imageViewFirst.userInteractionEnabled = YES;
-        _imageViewSecond.userInteractionEnabled = YES;
-        
-        _textViewFirst.editable = NO;
-        _textViewFirst.backgroundColor = [UIColor clearColor];
-        _textViewSecond.editable = NO;
-        _textViewSecond.backgroundColor = [UIColor clearColor];
-        
-        _imageViewFirst.contentMode = UIViewContentModeScaleToFill;
-        _imageViewSecond.contentMode = UIViewContentModeScaleToFill;
-        
-        [_imageViewFirst addGestureRecognizer:tapFirstGR];
-        [_imageViewSecond addGestureRecognizer:tapSecondGR];
-        
-        [self.contentView addSubview:_imageViewFirst];
-        [self.contentView addSubview:_textViewFirst];
-        [self.contentView addSubview:_imageViewSecond];
-        [self.contentView addSubview:_textViewSecond];
     }
     return self;
 }
 
-- (void)tappedFirstImage:(UITapGestureRecognizer *)recognizer
+- (IBAction)tappedFirstImage:(UITapGestureRecognizer *)recognizer
 {
     [self.delegate tappedFirstImage:recognizer];
 }
 
-- (void)tappedSecondImage:(UITapGestureRecognizer *)recognizer
+- (IBAction)tappedSecondImage:(UITapGestureRecognizer *)recognizer
 {
     [self.delegate tappedSecondImage:recognizer];
 }

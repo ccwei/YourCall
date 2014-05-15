@@ -56,17 +56,7 @@
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FeedCell" id="BGd-u8-wrW" customClass="FeedCollectionViewCell">
-                                <rect key="frame" x="0.0" y="63" width="255" height="291"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="255" height="291"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                            </collectionViewCell>
-                        </cells>
+                        <cells/>
                         <connections>
                             <outlet property="dataSource" destination="TwB-bn-Oky" id="aHQ-Fk-LXA"/>
                             <outlet property="delegate" destination="TwB-bn-Oky" id="ggI-5h-B1V"/>
@@ -182,10 +172,10 @@
             </objects>
             <point key="canvasLocation" x="-770" y="-77"/>
         </scene>
-        <!--Create New View Controller-->
+        <!--Create New Feed View Controller-->
         <scene sceneID="Kk3-BT-h6T">
             <objects>
-                <viewController id="2is-uh-LyS" customClass="CreateNewViewController" sceneMemberID="viewController">
+                <viewController id="2is-uh-LyS" customClass="CreateNewFeedViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="yaS-Wb-UjC"/>
                         <viewControllerLayoutGuide type="bottom" id="Xl9-pM-YVJ"/>

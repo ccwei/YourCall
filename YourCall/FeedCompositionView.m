@@ -9,10 +9,9 @@
 #import "FeedCompositionView.h"
 
 @interface FeedCompositionView() <UITextViewDelegate>
-
 @end
 
-static NSString *placeHolderString = @"Description for this item...";
+static NSString *placeHolderString = @"Description for this item";
 
 @implementation FeedCompositionView 
 @synthesize textColor = _textColor;
@@ -32,7 +31,6 @@ static NSString *placeHolderString = @"Description for this item...";
         self.maskView.alpha = 0.1f;
     }
 }
-
 
 - (void)awakeFromNib
 {
@@ -57,7 +55,7 @@ static NSString *placeHolderString = @"Description for this item...";
 {
     if ([textView.text isEqualToString:placeHolderString]) {
         textView.text = @"";
-        textView.textColor = self.textColor; //optional
+        textView.textColor = self.textColor;
     }
     [textView becomeFirstResponder];
 }
@@ -66,7 +64,7 @@ static NSString *placeHolderString = @"Description for this item...";
 {
     if ([textView.text isEqualToString:@""]) {
         textView.text = placeHolderString;
-        textView.textColor = [UIColor lightGrayColor]; //optional
+        textView.textColor = [UIColor lightGrayColor];
     }
     [textView resignFirstResponder];
 }
@@ -90,13 +88,4 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
     
     return (numberOfLines < MAX_NUMBER_OF_LINES_ALLOWED);
 }
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
-
 @end

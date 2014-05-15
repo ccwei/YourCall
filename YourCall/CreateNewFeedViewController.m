@@ -1,32 +1,32 @@
 //
-//  CreateNewViewController.m
+//  CreateNewFeedViewController.m
 //  YourCall
 //
 //  Created by Chih-Chiang Wei on 5/10/14.
 //  Copyright (c) 2014 Chih-Chiang Wei. All rights reserved.
 //
 
-#import "CreateNewViewController.h"
+#import "CreateNewFeedViewController.h"
 #import "FeedCompositionView.h"
 
-@interface CreateNewViewController ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate>
-@property (strong, nonatomic) UIImagePickerController *picker;
-@property int currentImageIndex;
+@interface CreateNewFeedViewController ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate>
+@property (strong, nonatomic) UIImagePickerController *imagePicker;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property int currentEditingCompositionViewIndex;
 
 @end
 
-@implementation CreateNewViewController
+@implementation CreateNewFeedViewController
 
 
-- (UIImagePickerController *) picker
+- (UIImagePickerController *) imagePicker
 {
-    if(!_picker)
+    if(!_imagePicker)
     {
-        _picker = [[UIImagePickerController alloc] init];
+        _imagePicker = [[UIImagePickerController alloc] init];
     }
     
-    return _picker;
+    return _imagePicker;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -39,10 +39,10 @@
 }
 
 - (void)presentImagePicker{
-    self.picker = [[UIImagePickerController alloc] init];
-    self.picker.delegate = self;
-    self.picker.allowsEditing = YES;
-    [self presentViewController:self.picker animated:YES completion:NULL];
+    self.imagePicker = [[UIImagePickerController alloc] init];
+    self.imagePicker.delegate = self;
+    self.imagePicker.allowsEditing = YES;
+    [self presentViewController:self.imagePicker animated:YES completion:NULL];
 }
 
 - (IBAction)firstImageClicked:(UITapGestureRecognizer *)sender {
@@ -53,13 +53,13 @@
 
 - (IBAction)secondImageClicked:(UITapGestureRecognizer *)sender {
     [self presentImagePicker];
-    self.currentImageIndex = 1;
+    self.currentEditingCompositionViewIndex = 1;
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
-    FeedCompositionView *currentView = self.feedCompositionViews[self.currentImageIndex];
+    FeedCompositionView *currentView = self.feedCompositionViews[self.currentEditingCompositionViewIndex];
     currentView.imageView.image = chosenImage;
     currentView.textColor = [UIColor whiteColor];
     [picker dismissViewControllerAnimated:YES completion:NULL];
@@ -113,7 +113,7 @@
                             @"Choose from Library",
                             nil];
     popup.tag = 1;
-    self.currentImageIndex = button.tag;
+    self.currentEditingCompositionViewIndex = button.tag;
     [popup showInView:self.view];
 }
 
@@ -122,11 +122,11 @@
 {
     switch (buttonIndex) {
         case 0:
-            self.picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            self.imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
             [self presentImagePicker];
             break;
         case 1:
-            self.picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+            self.imagePicker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
             [self presentImagePicker];
         default:
             break;

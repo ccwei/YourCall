@@ -1,5 +1,5 @@
 //
-//  CreateNewViewController.h
+//  CreateNewFeedViewController.h
 //  YourCall
 //
 //  Created by Chih-Chiang Wei on 5/10/14.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Feed.h"
 
-@interface CreateNewViewController : UIViewController
+@interface CreateNewFeedViewController : UIViewController
 @property BOOL isCanceled;
 @property (strong, nonatomic) IBOutletCollection(UIView) NSArray *feedCompositionViews;
 @end
