@@ -19,6 +19,12 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    [[UILabel appearance] setFont:[UIFont fontWithName:@"SegoeUI-Semilight" size:17.0]];
+    [[UITextView appearance] setFont:[UIFont fontWithName:@"SegoeUI-Semilight" size:18.0]];
+    [[UITextField appearance] setFont:[UIFont fontWithName:@"SegoeUI-Semilight" size:17.0]];
+    
+    
     return YES;
 }
 							

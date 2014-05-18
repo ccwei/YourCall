@@ -8,10 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol FeedCompositionViewProtocol <NSObject>
+- (void)pannedVertical:(UIPanGestureRecognizer *)recognizer;
+- (void)pannedHorizontal:(UIPanGestureRecognizer *)recognizer;
+@end
+
 @interface FeedCompositionView : UIView
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
+@property (strong, nonatomic) UIImage *image;
 @property (weak, nonatomic) IBOutlet UIButton *addPictureButton;
-@property (weak, nonatomic) IBOutlet UIView *maskView;
 @property (strong, nonatomic) UIColor *textColor;
+@property (weak, nonatomic) IBOutlet UILabel *imageEffectLabel;
+@property (nonatomic) float darkenValue;
+@property (nonatomic) int blurValue;
+@property (assign, nonatomic) id<FeedCompositionViewProtocol> delegate;
 @end

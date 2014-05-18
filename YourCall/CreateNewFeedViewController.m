@@ -7,17 +7,14 @@
 //
 
 #import "CreateNewFeedViewController.h"
-#import "FeedCompositionView.h"
 
 @interface CreateNewFeedViewController ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate>
 @property (strong, nonatomic) UIImagePickerController *imagePicker;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property int currentEditingCompositionViewIndex;
-
+@property (nonatomic) int currentEditingCompositionViewIndex;
 @end
 
 @implementation CreateNewFeedViewController
-
 
 - (UIImagePickerController *) imagePicker
 {
@@ -60,6 +57,7 @@
     
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
     FeedCompositionView *currentView = self.feedCompositionViews[self.currentEditingCompositionViewIndex];
+    currentView.image = chosenImage;
     currentView.imageView.image = chosenImage;
     currentView.textColor = [UIColor whiteColor];
     [picker dismissViewControllerAnimated:YES completion:NULL];
@@ -68,7 +66,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     NSArray *bundleObjects;
     FeedCompositionView *currView;
     NSMutableArray *myViews = [NSMutableArray arrayWithCapacity:self.feedCompositionViews.count];
@@ -83,6 +80,8 @@
         }
         [currView.addPictureButton addTarget:self action:@selector(uploadImageClicked:) forControlEvents:UIControlEventTouchUpInside];
         currView.addPictureButton.tag = index;
+        currView.tag = index;
+        currView.delegate = self;
         [currWrapperView addSubview:currView];
         
         [myViews addObject:currView];
@@ -112,7 +111,6 @@
                             @"Take Photo",
                             @"Choose from Library",
                             nil];
-    popup.tag = 1;
     self.currentEditingCompositionViewIndex = button.tag;
     [popup showInView:self.view];
 }
@@ -144,8 +142,6 @@
     self.isCanceled = YES;
     [self performSegueWithIdentifier:@"UnwindToFeedCVC" sender:self];
 }
-
-
 
 - (void)keyboardWasShown:(NSNotification *)notification {
     
@@ -208,17 +204,66 @@
     
 }
 
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)pannedHorizontal:(UIPanGestureRecognizer *)recognizer
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    CGPoint translation = [recognizer translationInView:self.view];
+    FeedCompositionView *currentView = [self getCurrentTouchedView:recognizer];
+    
+    if (translation.x > 0) {
+        currentView.blurValue += 1;
+    } else {
+        currentView.blurValue -= 1;
+    }
+    currentView.imageEffectLabel.text = [NSString stringWithFormat:@"Blur %d%%",currentView.blurValue * 10];
+    
+    [self applyImageEffect:recognizer];
 }
-*/
+
+- (void)pannedVertical:(UIPanGestureRecognizer *)recognizer
+{
+    CGPoint translation = [recognizer translationInView:self.view];
+    FeedCompositionView *currentView = [self getCurrentTouchedView:recognizer];
+    
+    if (translation.y > 0) {
+        currentView.darkenValue += 0.05;
+    } else {
+        currentView.darkenValue -= 0.05;
+    }
+    NSNumber *darkenPercentage = [NSNumber numberWithFloat:currentView.darkenValue * 100];
+    currentView.imageEffectLabel.text = [NSString stringWithFormat:@"Dim %d%%", [darkenPercentage intValue]];
+    [self applyImageEffect:recognizer];
+}
+
+- (void)applyImageEffect: (UIPanGestureRecognizer*)recognizer
+{
+    FeedCompositionView *currentView = [self getCurrentTouchedView:recognizer];
+    
+    if (recognizer.state == UIGestureRecognizerStateEnded||
+        recognizer.state == UIGestureRecognizerStateCancelled ||
+        recognizer.state == UIGestureRecognizerStateFailed) {
+        currentView.imageEffectLabel.hidden = YES;
+    } else {
+        currentView.imageEffectLabel.hidden = NO;
+    }
+    
+    currentView.imageView.image = [currentView.image applyBlurWithRadius:2.0 iterationsCount:currentView.blurValue tintColor:[UIColor colorWithWhite:0.11 alpha:currentView.darkenValue] saturationDeltaFactor:1.8 maskImage:nil];
+}
+
+- (FeedCompositionView *)getCurrentTouchedView: (UIPanGestureRecognizer *)recognizer
+{
+    CGPoint touchPoint = [recognizer locationInView:self.view];
+    
+    FeedCompositionView *firstView = self.feedCompositionViews[0];
+    FeedCompositionView *secondView = self.feedCompositionViews[1];
+    FeedCompositionView *currentView;
+    
+    if (CGRectContainsPoint(firstView.frame, touchPoint)) {
+        currentView = firstView;
+    } else {
+        currentView = secondView;
+    }
+    
+    return currentView;
+}
 
 @end

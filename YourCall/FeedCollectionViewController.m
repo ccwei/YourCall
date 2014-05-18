@@ -8,12 +8,23 @@
 
 #import "FeedCollectionViewController.h"
 #import "FeedCompositionView.h"
+#import "UIViewController+ECSlidingViewController.h"
+#import "MEZoomAnimationController.h"
 
 @interface FeedCollectionViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 @property (nonatomic, strong) NSArray *feeds;
+@property (nonatomic, strong) MEZoomAnimationController *zoomAnimationController;
 @end
 
 @implementation FeedCollectionViewController
+
+- (MEZoomAnimationController *)zoomAnimationController
+{
+    if (!_zoomAnimationController) {
+        _zoomAnimationController = [[MEZoomAnimationController alloc] init];
+    }
+    return _zoomAnimationController;
+}
 
 - (void) awakeFromNib
 {
@@ -35,10 +46,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UINib *cellNib = [UINib nibWithNibName:@"FeedViewCell" bundle:nil];
+    UINib *cellNib = [UINib nibWithNibName:@"CollectionViewCell" bundle:nil];
     [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"Cell"];
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    self.slidingViewController.delegate = self.zoomAnimationController;
     // Do any additional setup after loading the view.
 }
 
@@ -103,8 +115,24 @@
         [selectedCell.imageViewFirst.layer setBackgroundColor:[[UIColor redColor] CGColor]];
         [selectedCell.imageViewFirst.layer setBorderWidth:4.0];
         [selectedCell.imageViewSecond.layer setBorderWidth:0];
+        [UIView animateWithDuration:1.0f
+                              delay:0
+                            options:UIViewAnimationOptionBeginFromCurrentState
+                         animations:^{
+                             selectedCell.voteImageView.hidden = NO;
+                             selectedCell.voteImageView.frame = CGRectMake(0, 0, 50, 50);
+                         }
+                         completion:nil];
+        
     } else {
         [selectedCell.imageViewFirst.layer setBorderWidth:0];
+        [UIView animateWithDuration:1.0f
+                              delay:0
+                            options:UIViewAnimationOptionBeginFromCurrentState
+                         animations:^{
+                             selectedCell.voteImageView.hidden = YES;
+                         }
+                         completion:nil];
     }
 }
 
@@ -118,8 +146,23 @@
         [selectedCell.imageViewSecond.layer setBackgroundColor:[[UIColor redColor] CGColor]];
         [selectedCell.imageViewSecond.layer setBorderWidth:4.0];
         [selectedCell.imageViewFirst.layer setBorderWidth:0];
+        [UIView animateWithDuration:1.0f
+                              delay:0
+                            options:UIViewAnimationOptionBeginFromCurrentState
+                         animations:^{
+                             selectedCell.voteImageView.hidden = NO;
+                             selectedCell.voteImageView.frame = CGRectMake(0, 220, 50, 50);
+                         }
+                         completion:nil];
     } else {
         [selectedCell.imageViewSecond.layer setBorderWidth:0];
+        [UIView animateWithDuration:1.0f
+                              delay:0
+                            options:UIViewAnimationOptionBeginFromCurrentState
+                         animations:^{
+                             selectedCell.voteImageView.hidden = YES;
+                         }
+                         completion:nil];
     }
 }
 

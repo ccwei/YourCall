@@ -19,15 +19,19 @@
         _feed = feed;
     }
     self.imageViewFirst.image = nil;
+    [self.activityIndicatorFirst startAnimating];
     [feed getImageFirst:^(UIImage* image) {
         self.imageViewFirst.image = image;
         [self setNeedsDisplay];
+        [self.activityIndicatorFirst stopAnimating];
     }];
     
     self.imageViewSecond.image = nil;
+    [self.activityIndicatorSecond startAnimating];
     [feed getImageSecond:^(UIImage* image) {
         self.imageViewSecond.image = image;
         [self setNeedsDisplay];
+        [self.activityIndicatorSecond stopAnimating];
     }];
     
     self.textViewFirst.text = feed.descriptionFirst;
@@ -45,11 +49,19 @@
     _imageViewFirst.contentMode = UIViewContentModeScaleAspectFill;
     _imageViewSecond.contentMode = UIViewContentModeScaleAspectFill;
     
+    _voteImageView.hidden = YES;
+    
     UITapGestureRecognizer *tapFirstGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedFirstImage:)];
     UITapGestureRecognizer *tapSecondGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedSecondImage:)];
     
     [_firstView addGestureRecognizer:tapFirstGR];
     [_secondView addGestureRecognizer:tapSecondGR];
+    
+    if (self.votedItem == First) {
+        self.voteImageView.frame = CGRectMake(0, 0, 50, 50);
+    } else if (self.votedItem == Second){
+        self.voteImageView.frame = CGRectMake(0, 220, 50, 50);
+    }
 }
 
 - (id)initWithFrame:(CGRect)frame

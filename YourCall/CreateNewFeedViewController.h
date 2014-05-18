@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "Feed.h"
+#import "UIImage+ImageEffects.h"
+#import "FeedCompositionView.h"
 
-@interface CreateNewFeedViewController : UIViewController
+@interface CreateNewFeedViewController : UIViewController<FeedCompositionViewProtocol>
 @property BOOL isCanceled;
 @property (strong, nonatomic) IBOutletCollection(UIView) NSArray *feedCompositionViews;
 @end

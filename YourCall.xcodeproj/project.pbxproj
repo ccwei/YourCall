@@ -37,6 +37,10 @@
 		B685D8C81915F3D90016533B /* FeedCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B685D8C71915F3D90016533B /* FeedCollectionViewController.m */; };
 		B685D8CB1915F9D40016533B /* DataRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = B685D8CA1915F9D40016533B /* DataRepository.m */; };
 		B6ACCCC2191F0322003489A9 /* MyFeedsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6ACCCC1191F0322003489A9 /* MyFeedsTableViewController.m */; };
+		B6B5787B1925C21B00800550 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B5787A1925C21B00800550 /* UIImage+ImageEffects.m */; };
+		B6C774E1192953B800AD8AEC /* DirectionalPanGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = B6C774E0192953B800AD8AEC /* DirectionalPanGestureRecognizer.m */; };
+		B6C774E419296B0A00AD8AEC /* MEZoomAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6C774E319296B0A00AD8AEC /* MEZoomAnimationController.m */; };
+		B6C774E61929701F00AD8AEC /* crown.png in Resources */ = {isa = PBXBuildFile; fileRef = B6C774E51929701F00AD8AEC /* crown.png */; };
 		B6E04E2519247C9100D9A3CF /* segoeui-light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B6E04E2219247C9100D9A3CF /* segoeui-light.ttf */; };
 		B6E04E2619247C9100D9A3CF /* segoeui-semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B6E04E2319247C9100D9A3CF /* segoeui-semibold.ttf */; };
 		B6E04E2719247C9100D9A3CF /* segoeui-semilight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B6E04E2419247C9100D9A3CF /* segoeui-semilight.ttf */; };
@@ -100,6 +104,13 @@
 		B685D8CA1915F9D40016533B /* DataRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataRepository.m; sourceTree = "<group>"; };
 		B6ACCCC0191F0322003489A9 /* MyFeedsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFeedsTableViewController.h; sourceTree = "<group>"; };
 		B6ACCCC1191F0322003489A9 /* MyFeedsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyFeedsTableViewController.m; sourceTree = "<group>"; };
+		B6B578791925C21B00800550 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		B6B5787A1925C21B00800550 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		B6C774DF192953B800AD8AEC /* DirectionalPanGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectionalPanGestureRecognizer.h; sourceTree = "<group>"; };
+		B6C774E0192953B800AD8AEC /* DirectionalPanGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectionalPanGestureRecognizer.m; sourceTree = "<group>"; };
+		B6C774E219296B0A00AD8AEC /* MEZoomAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEZoomAnimationController.h; sourceTree = "<group>"; };
+		B6C774E319296B0A00AD8AEC /* MEZoomAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEZoomAnimationController.m; sourceTree = "<group>"; };
+		B6C774E51929701F00AD8AEC /* crown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crown.png; sourceTree = "<group>"; };
 		B6E04E2219247C9100D9A3CF /* segoeui-light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "segoeui-light.ttf"; sourceTree = "<group>"; };
 		B6E04E2319247C9100D9A3CF /* segoeui-semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "segoeui-semibold.ttf"; sourceTree = "<group>"; };
 		B6E04E2419247C9100D9A3CF /* segoeui-semilight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "segoeui-semilight.ttf"; sourceTree = "<group>"; };
@@ -160,6 +171,8 @@
 				B6300F511922E76700BFC417 /* FeedCompositionView.m */,
 				B633FE37191EC5A1003E6EC2 /* CreateNewFeedViewController.h */,
 				B633FE38191EC5A1003E6EC2 /* CreateNewFeedViewController.m */,
+				B6C774DF192953B800AD8AEC /* DirectionalPanGestureRecognizer.h */,
+				B6C774E0192953B800AD8AEC /* DirectionalPanGestureRecognizer.m */,
 			);
 			name = Composition;
 			sourceTree = "<group>";
@@ -167,6 +180,7 @@
 		B616D3F9191ECB8800E97162 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B6C774E51929701F00AD8AEC /* crown.png */,
 				B6E04E2219247C9100D9A3CF /* segoeui-light.ttf */,
 				B6E04E2319247C9100D9A3CF /* segoeui-semibold.ttf */,
 				B6E04E2419247C9100D9A3CF /* segoeui-semilight.ttf */,
@@ -192,6 +206,10 @@
 		B6300F57192323E500BFC417 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				B6C774E219296B0A00AD8AEC /* MEZoomAnimationController.h */,
+				B6C774E319296B0A00AD8AEC /* MEZoomAnimationController.m */,
+				B6B578791925C21B00800550 /* UIImage+ImageEffects.h */,
+				B6B5787A1925C21B00800550 /* UIImage+ImageEffects.m */,
 			);
 			name = External;
 			sourceTree = "<group>";
@@ -372,6 +390,7 @@
 				B6E04E2619247C9100D9A3CF /* segoeui-semibold.ttf in Resources */,
 				B6E04E2D1924906C00D9A3CF /* CollectionViewCell.xib in Resources */,
 				B616D3FB191ECBA100E97162 /* placeholder.jpg in Resources */,
+				B6C774E61929701F00AD8AEC /* crown.png in Resources */,
 				B6E04E2519247C9100D9A3CF /* segoeui-light.ttf in Resources */,
 				B685D8991915F2C80016533B /* InfoPlist.strings in Resources */,
 			);
@@ -425,8 +444,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6C774E1192953B800AD8AEC /* DirectionalPanGestureRecognizer.m in Sources */,
 				B685D8C81915F3D90016533B /* FeedCollectionViewController.m in Sources */,
 				B6300F521922E76700BFC417 /* FeedCompositionView.m in Sources */,
+				B6C774E419296B0A00AD8AEC /* MEZoomAnimationController.m in Sources */,
 				B685D89F1915F2C80016533B /* AppDelegate.m in Sources */,
 				B633FE39191EC5A1003E6EC2 /* CreateNewFeedViewController.m in Sources */,
 				B62D29821920257200BA9273 /* SignInViewController.m in Sources */,
@@ -436,6 +457,7 @@
 				B66779E7191727350093DDC2 /* FeedService.m in Sources */,
 				B685D89B1915F2C80016533B /* main.m in Sources */,
 				B685D8CB1915F9D40016533B /* DataRepository.m in Sources */,
+				B6B5787B1925C21B00800550 /* UIImage+ImageEffects.m in Sources */,
 				B62D2985192027B300BA9273 /* SignUpViewController.m in Sources */,
 				B62D298919202D4700BA9273 /* RegistrationService.m in Sources */,
 				B6ACCCC2191F0322003489A9 /* MyFeedsTableViewController.m in Sources */,

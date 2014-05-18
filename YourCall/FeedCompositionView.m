@@ -7,14 +7,31 @@
 //
 
 #import "FeedCompositionView.h"
+#import "DirectionalPanGestureRecognizer.h"
 
-@interface FeedCompositionView() <UITextViewDelegate>
+@interface FeedCompositionView() <UITextViewDelegate, UIGestureRecognizerDelegate>
+@property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @end
 
 static NSString *placeHolderString = @"Description for this item";
 
 @implementation FeedCompositionView 
 @synthesize textColor = _textColor;
+
+- (void)setDarkenValue:(float)darkenValue
+{
+    if (darkenValue >= 0.0f && darkenValue <= 1.0f) {
+        _darkenValue = darkenValue;
+    }
+}
+
+- (void)setBlurValue:(int)blurValue
+{
+    if (blurValue >= 0 && blurValue <= 10) {
+        _blurValue = blurValue;
+    }
+}
+
 - (UIColor *)textColor
 {
     if (!_textColor) {
@@ -28,7 +45,6 @@ static NSString *placeHolderString = @"Description for this item";
     if (![_textColor isEqual:textColor]) {
         _textColor = textColor;
         self.textView.textColor = textColor;
-        self.maskView.alpha = 0.1f;
     }
 }
 
@@ -38,8 +54,44 @@ static NSString *placeHolderString = @"Description for this item";
     self.textView.text = placeHolderString;
     self.textView.textColor =[UIColor lightGrayColor];
     self.textView.backgroundColor = [UIColor clearColor];
-    self.maskView.backgroundColor = [UIColor blackColor];
-    self.maskView.alpha = 0.0f;
+    
+    [self.imageEffectLabel setFont:[UIFont fontWithName:@"SegoeUI-Semilight" size:14.0]];
+    self.imageEffectLabel.textColor = [UIColor whiteColor];
+    self.imageEffectLabel.backgroundColor = [UIColor lightGrayColor];
+    self.imageEffectLabel.hidden = YES;
+    
+    DirectionalPanGestureRecognizer *panGRVertical = [[DirectionalPanGestureRecognizer alloc] initWithTarget:self action:@selector(pannedVertical:)];
+    panGRVertical.direciton = DirectionalPanGestureRecognizerVertical;
+    panGRVertical.delegate = self;
+    
+    DirectionalPanGestureRecognizer *panGRHorizontal = [[DirectionalPanGestureRecognizer alloc] initWithTarget:self action:@selector(pannedHorizontal:)];
+    panGRHorizontal.direciton = DirectionalPanGestureRecognizerHorizontal;
+    panGRHorizontal.delegate = self;
+    [self.backgroundView addGestureRecognizer:panGRVertical];
+    [self.backgroundView addGestureRecognizer:panGRHorizontal];
+    
+}
+
+/*
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
+}
+*/
+/*
+- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)panGestureRecognizer {
+    CGPoint velocity = [panGestureRecognizer velocityInView:self];
+    return fabs(velocity.y) > fabs(velocity.x);
+}*/
+
+- (void)pannedVertical: (UIPanGestureRecognizer *)recognizer
+{
+    [self.delegate pannedVertical:recognizer];
+}
+
+- (void)pannedHorizontal: (UIPanGestureRecognizer *)recognizer
+{
+    [self.delegate pannedHorizontal:recognizer];
 }
 
 - (id)initWithFrame:(CGRect)frame

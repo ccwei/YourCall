@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Feed.h"
 #import "FeedService.h"
+#import "UIImage+ImageEffects.h"
 
 @protocol FeedCollectionViewCellProtocol <NSObject>
 - (void)tappedFirstImage:(UITapGestureRecognizer *)recognizer;
@@ -23,6 +24,10 @@
 @property (nonatomic, weak) IBOutlet UIImageView *imageViewSecond;
 @property (nonatomic, weak) IBOutlet UITextView *textViewFirst;
 @property (nonatomic, weak) IBOutlet UITextView *textViewSecond;
+@property (weak, nonatomic) IBOutlet UIImageView *voteImageView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorFirst;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorSecond;
+@property (nonatomic) VoteItem votedItem;
 @property (nonatomic, strong) Feed *feed;
 @property (nonatomic, assign) id<FeedCollectionViewCellProtocol> delegate;
 @end

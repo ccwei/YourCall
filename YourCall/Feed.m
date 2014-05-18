@@ -45,15 +45,18 @@
             [_imageSecond drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
             _imageSecond = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
-            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (completionBlock) {
+                    completionBlock(_imageSecond);
+                }
+            });
+        });
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
             if (completionBlock) {
                 completionBlock(_imageSecond);
             }
         });
-    } else {
-        if (completionBlock) {
-            completionBlock(_imageSecond);
-        }
     }
 }
 
