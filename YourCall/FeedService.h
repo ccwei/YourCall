@@ -17,5 +17,5 @@
 + (void)voteSecond: (int) feedId completionBlock:(void (^)())completionBlock;
 + (void)unvoteFirst: (int) feedId completionBlock:(void (^)())completionBlock;
 + (void)unvoteSecond: (int) feedId completionBlock:(void (^)())completionBlock;
-+ (void)createFeed:(Feed *) feed;
++ (void)postFeed:(Feed *) feed;
 @end

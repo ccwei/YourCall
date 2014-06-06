@@ -7,109 +7,101 @@
 //
 
 #import "Feed.h"
-
+@interface Feed ()
+@property (nonatomic, strong) NSMutableArray *feedItemsArray;
+@end
 @implementation Feed
-- (void) getImageFirst:(void(^)(UIImage*))completionBlock
-{
-    if (!_imageFirst) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            _imageFirst = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.imageUrlFirst]]];
-            CGSize newSize = CGSizeMake(800.0f, 600.0f);
-            UIGraphicsBeginImageContext(newSize);
-            [_imageFirst drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
-            _imageFirst = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            
-            if (completionBlock) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    completionBlock(_imageFirst);
-                });
-            }
-        });
-    } else {
-        if (completionBlock) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completionBlock(_imageFirst);
-            });
-        }
+
+- (id) init {
+    if (self = [super init]) {
+        self.votedFeedItemIndex = None;
     }
+    return self;
 }
 
-- (void) getImageSecond:(void(^)(UIImage*))completionBlock
+- (NSMutableArray *)feedItemsArray
 {
-    if (!_imageSecond) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            _imageSecond = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.imageUrlSecond]]];
-            CGSize newSize = CGSizeMake(800.0f, 600.0f);
-            UIGraphicsBeginImageContext(newSize);
-            [_imageSecond drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
-            _imageSecond = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (completionBlock) {
-                    completionBlock(_imageSecond);
-                }
-            });
-        });
-    } else {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (completionBlock) {
-                completionBlock(_imageSecond);
-            }
-        });
+    if (!_feedItemsArray) {
+        _feedItemsArray = [[NSMutableArray alloc] initWithCapacity:2];
     }
+    return _feedItemsArray;
 }
 
-- (BOOL) voteFirst
+- (NSArray *)feedItems
 {
-    switch (self.votedItem) {
-        case None:
-            [FeedService voteFirst: self.feedId completionBlock:nil];
-            self.votedItem = First;
-            return YES;
+    return [self.feedItemsArray copy];
+}
+
+- (void) addFeedItem:(FeedItem *)feedItem
+{
+    [self.feedItemsArray addObject:feedItem];
+}
+
++ (Feed *)createFeed:(NSDictionary *)feedData
+{
+    Feed *feed = [[Feed alloc] init];
+    feed.feedId = [[feedData valueForKeyPath:@"Id"] intValue];
+    NSArray *feedItemsData = [feedData valueForKeyPath:@"FeedItems"];
+    for (NSDictionary *feedItemData in feedItemsData) {
+        FeedItem *feedItem = [FeedItem createFeedItem:feedItemData];
+        [feed addFeedItem:feedItem];
+    }
+    
+    return feed;
+}
+
+- (void)vote:(FeedItemIndices)feedItemIndex completionBlock:(void (^)())completionBlock
+{
+    if (feedItemIndex == self.votedFeedItemIndex) {
+        return;
+    }
+    switch (feedItemIndex) {
         case First:
-            [FeedService unvoteFirst: self.feedId completionBlock:nil];
-            self.votedItem = None;
-            return NO;
+            [FeedService voteFirst: self.feedId completionBlock:completionBlock];
+            self.votedFeedItemIndex = First;
+            break;
         case Second:
-        {
-            [FeedService unvoteSecond: self.feedId completionBlock:^{
-                [FeedService voteFirst: self.feedId completionBlock: nil];
-            }];
-            self.votedItem = First;
-            return YES;
-        }
+            [FeedService voteSecond: self.feedId completionBlock:completionBlock];
+            self.votedFeedItemIndex = Second;
+            break;
         default:
             break;
     }
 }
 
-- (BOOL) voteSecond
+- (void)unvote:(FeedItemIndices)feedItemIndex completionBlock:(void (^)())completionBlock
 {
-    switch (self.votedItem) {
-        case None:
-            [FeedService voteSecond: self.feedId completionBlock:nil];
-            self.votedItem = Second;
-            return YES;
+    if (feedItemIndex != self.votedFeedItemIndex) {
+        return;
+    }
+    switch (feedItemIndex) {
         case First:
-        {
-            [FeedService unvoteFirst: self.feedId completionBlock:^{
-                [FeedService voteSecond: self.feedId completionBlock:nil];
-            }];
-            self.votedItem = Second;
-            return YES;
-        }
+            [FeedService unvoteFirst: self.feedId completionBlock:completionBlock];
+            break;
         case Second:
-            [FeedService unvoteSecond: self.feedId completionBlock:nil];
-            self.votedItem = None;
-            return NO;
+            [FeedService unvoteSecond: self.feedId completionBlock:completionBlock];
+            break;
         default:
             break;
     }
+    self.votedFeedItemIndex = None;
+}
+
+- (FeedItemIndices) getToggledIndex:(FeedItemIndices)index
+{
+    FeedItemIndices result = None;
+
+    if (index == First) {
+        result = Second;
+    }
+    if (index == Second) {
+        result = First;
+    }
+    return result;
 }
 
 - (void)save
 {
-    [FeedService createFeed:self];
+    [FeedService postFeed:self];
 }
 @end

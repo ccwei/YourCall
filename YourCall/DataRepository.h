@@ -15,5 +15,5 @@
 @property (nonatomic, strong) NSArray *myFeeds;
 - (void) allFeeds: (void (^)(NSArray *))completionBlock;
 - (void) myFeeds: (void (^)(NSArray *))completionBlock;
-+ (DataRepository *)sharedManager;
++ (DataRepository *)getInstance;
 @end

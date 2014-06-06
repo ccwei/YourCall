@@ -22,7 +22,6 @@
     {
         _imagePicker = [[UIImagePickerController alloc] init];
     }
-    
     return _imagePicker;
 }
 
@@ -35,26 +34,15 @@
     return self;
 }
 
-- (void)presentImagePicker{
-    self.imagePicker = [[UIImagePickerController alloc] init];
+- (void)presentImagePicker
+{
     self.imagePicker.delegate = self;
     self.imagePicker.allowsEditing = YES;
     [self presentViewController:self.imagePicker animated:YES completion:NULL];
 }
 
-- (IBAction)firstImageClicked:(UITapGestureRecognizer *)sender {
- 
-    [self presentImagePicker];
-    
-}
-
-- (IBAction)secondImageClicked:(UITapGestureRecognizer *)sender {
-    [self presentImagePicker];
-    self.currentEditingCompositionViewIndex = 1;
-}
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
     FeedCompositionView *currentView = self.feedCompositionViews[self.currentEditingCompositionViewIndex];
     currentView.image = chosenImage;
@@ -63,58 +51,58 @@
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
-- (void)viewDidLoad
+- (void)setupFeedCompositionViews
 {
-    [super viewDidLoad];
     NSArray *bundleObjects;
-    FeedCompositionView *currView;
-    NSMutableArray *myViews = [NSMutableArray arrayWithCapacity:self.feedCompositionViews.count];
+    FeedCompositionView *feedCompositionView;
+    NSMutableArray *tempViews = [NSMutableArray arrayWithCapacity:self.feedCompositionViews.count];
     int index = 0;
-    for (UIView *currWrapperView in self.feedCompositionViews) {
+    for (UIView *currentWrapperView in self.feedCompositionViews) {
         bundleObjects = [[NSBundle mainBundle] loadNibNamed:@"FeedCompositionView" owner:self options:nil];
         for (id object in bundleObjects) {
             if ([object isKindOfClass:[FeedCompositionView class]]){
-                currView = (FeedCompositionView *)object;
+                feedCompositionView = (FeedCompositionView *)object;
                 break;
             }
         }
-        [currView.addPictureButton addTarget:self action:@selector(uploadImageClicked:) forControlEvents:UIControlEventTouchUpInside];
-        currView.addPictureButton.tag = index;
-        currView.tag = index;
-        currView.delegate = self;
-        [currWrapperView addSubview:currView];
+        [feedCompositionView.addPictureButton addTarget:self action:@selector(uploadImageClicked:) forControlEvents:UIControlEventTouchUpInside];
+        feedCompositionView.addPictureButton.tag = index;
+        feedCompositionView.tag = index;
+        feedCompositionView.delegate = self;
+        [currentWrapperView addSubview:feedCompositionView];
         
-        [myViews addObject:currView];
+        [tempViews addObject:feedCompositionView];
         index++;
     }
-    self.feedCompositionViews = myViews;
-    
+    self.feedCompositionViews = tempViews;
+}
+
+- (void)setupGestureRecognizer
+{
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self
                                    action:@selector(dismissKeyboard)];
     [tap setCancelsTouchesInView:NO];
     [self.view addGestureRecognizer:tap];
-    
-    // Do any additional setup after loading the view.
 }
 
-- (void)dismissKeyboard
+- (void)viewDidLoad
 {
-    for (FeedCompositionView *view in self.feedCompositionViews) {
-        [view.textView resignFirstResponder];
-    }
+    [super viewDidLoad];
+    
+    [self setupFeedCompositionViews];
+    [self setupGestureRecognizer];
 }
 
 - (void)uploadImageClicked: (UIButton *)button
 {
-    UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
                             @"Take Photo",
                             @"Choose from Library",
                             nil];
     self.currentEditingCompositionViewIndex = button.tag;
-    [popup showInView:self.view];
+    [actionSheet showInView:self.view];
 }
-
 
 - (void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -131,16 +119,75 @@
     }
 }
 
+- (IBAction)cancel
+{
+    self.isCanceled = YES;
+    [self performSegueWithIdentifier:@"UnwindToFeedCVC" sender:self];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)cancel
+#pragma mark FeedCompositionViewProtocol
+
+- (FeedCompositionView *)getCurrentTouchedView: (UIPanGestureRecognizer *)recognizer
 {
-    self.isCanceled = YES;
-    [self performSegueWithIdentifier:@"UnwindToFeedCVC" sender:self];
+    CGPoint touchPoint = [recognizer locationInView:self.view];
+    
+    FeedCompositionView *currentView;
+    for (FeedCompositionView *feedCompositionView in self.feedCompositionViews) {
+        if (CGRectContainsPoint([feedCompositionView getFrameInView:self.view], touchPoint)) {
+            currentView = feedCompositionView;
+            break;
+        }
+    }
+    return currentView;
+}
+
+- (void)pannedHorizontal:(UIPanGestureRecognizer *)recognizer
+{
+    CGPoint translation = [recognizer translationInView:self.view];
+    FeedCompositionView *currentView = [self getCurrentTouchedView:recognizer];
+    
+    if (translation.x > 0) {
+        currentView.blurValue += 1;
+    } else {
+        currentView.blurValue -= 1;
+    }
+    
+    BOOL hideImageEffectLabel = (recognizer.state == UIGestureRecognizerStateEnded||
+                                 recognizer.state == UIGestureRecognizerStateCancelled ||
+                                 recognizer.state == UIGestureRecognizerStateFailed);
+    [currentView updateImageEffectLabelWithText:[NSString stringWithFormat:@"Blur %d%%",currentView.blurValue * 10] hidden:hideImageEffectLabel];
+}
+
+- (void)pannedVertical:(UIPanGestureRecognizer *)recognizer
+{
+    CGPoint translation = [recognizer translationInView:self.view];
+    FeedCompositionView *currentView = [self getCurrentTouchedView:recognizer];
+    
+    if (translation.y > 0) {
+        currentView.darkenValue += 0.05;
+    } else {
+        currentView.darkenValue -= 0.05;
+    }
+    int darkenPercentage = [[NSNumber numberWithFloat:currentView.darkenValue * 100] intValue];
+    BOOL hideImageEffectLabel = (recognizer.state == UIGestureRecognizerStateEnded||
+                                 recognizer.state == UIGestureRecognizerStateCancelled ||
+                                 recognizer.state == UIGestureRecognizerStateFailed);
+    [currentView updateImageEffectLabelWithText:[NSString stringWithFormat:@"Dim %d%%", darkenPercentage] hidden:hideImageEffectLabel];
+}
+
+
+#pragma mark KeyBoardNotifications
+- (void)dismissKeyboard
+{
+    for (FeedCompositionView *view in self.feedCompositionViews) {
+        [view.textView resignFirstResponder];
+    }
 }
 
 - (void)keyboardWasShown:(NSNotification *)notification {
@@ -203,67 +250,4 @@
     [super viewWillDisappear:animated];
     
 }
-
-- (void)pannedHorizontal:(UIPanGestureRecognizer *)recognizer
-{
-    CGPoint translation = [recognizer translationInView:self.view];
-    FeedCompositionView *currentView = [self getCurrentTouchedView:recognizer];
-    
-    if (translation.x > 0) {
-        currentView.blurValue += 1;
-    } else {
-        currentView.blurValue -= 1;
-    }
-    currentView.imageEffectLabel.text = [NSString stringWithFormat:@"Blur %d%%",currentView.blurValue * 10];
-    
-    [self applyImageEffect:recognizer];
-}
-
-- (void)pannedVertical:(UIPanGestureRecognizer *)recognizer
-{
-    CGPoint translation = [recognizer translationInView:self.view];
-    FeedCompositionView *currentView = [self getCurrentTouchedView:recognizer];
-    
-    if (translation.y > 0) {
-        currentView.darkenValue += 0.05;
-    } else {
-        currentView.darkenValue -= 0.05;
-    }
-    NSNumber *darkenPercentage = [NSNumber numberWithFloat:currentView.darkenValue * 100];
-    currentView.imageEffectLabel.text = [NSString stringWithFormat:@"Dim %d%%", [darkenPercentage intValue]];
-    [self applyImageEffect:recognizer];
-}
-
-- (void)applyImageEffect: (UIPanGestureRecognizer*)recognizer
-{
-    FeedCompositionView *currentView = [self getCurrentTouchedView:recognizer];
-    
-    if (recognizer.state == UIGestureRecognizerStateEnded||
-        recognizer.state == UIGestureRecognizerStateCancelled ||
-        recognizer.state == UIGestureRecognizerStateFailed) {
-        currentView.imageEffectLabel.hidden = YES;
-    } else {
-        currentView.imageEffectLabel.hidden = NO;
-    }
-    
-    currentView.imageView.image = [currentView.image applyBlurWithRadius:2.0 iterationsCount:currentView.blurValue tintColor:[UIColor colorWithWhite:0.11 alpha:currentView.darkenValue] saturationDeltaFactor:1.8 maskImage:nil];
-}
-
-- (FeedCompositionView *)getCurrentTouchedView: (UIPanGestureRecognizer *)recognizer
-{
-    CGPoint touchPoint = [recognizer locationInView:self.view];
-    
-    FeedCompositionView *firstView = self.feedCompositionViews[0];
-    FeedCompositionView *secondView = self.feedCompositionViews[1];
-    FeedCompositionView *currentView;
-    
-    if (CGRectContainsPoint(firstView.frame, touchPoint)) {
-        currentView = firstView;
-    } else {
-        currentView = secondView;
-    }
-    
-    return currentView;
-}
-
 @end

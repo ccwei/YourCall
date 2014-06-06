@@ -18,20 +18,27 @@ static NSString *placeHolderString = @"Description for this item";
 @implementation FeedCompositionView 
 @synthesize textColor = _textColor;
 
+#define MIN_DARK 0.0f
+#define MAX_DARK 1.0f
 - (void)setDarkenValue:(float)darkenValue
 {
-    if (darkenValue >= 0.0f && darkenValue <= 1.0f) {
+    if (darkenValue >= MIN_DARK && darkenValue <= MAX_DARK) {
         _darkenValue = darkenValue;
+        [self updateImageView];
     }
 }
 
+#define MIN_BLUR 0
+#define MAX_BLUR 10
 - (void)setBlurValue:(int)blurValue
 {
-    if (blurValue >= 0 && blurValue <= 10) {
+    if (blurValue >= MIN_BLUR && blurValue <= MAX_BLUR) {
         _blurValue = blurValue;
+        [self updateImageView];
     }
 }
 
+#define DEFAULT_DESCRIPTION_TEXT_COLOR [UIColor lightGrayColor]
 - (UIColor *)textColor
 {
     if (!_textColor) {
@@ -48,41 +55,53 @@ static NSString *placeHolderString = @"Description for this item";
     }
 }
 
+- (void)initialSetup
+{
+    [self setupTextView];
+    [self setupImageEffectLabel];
+    [self setupGestureRecognizer];
+}
+
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self initialSetup];
+    }
+    return self;
+}
+
 - (void)awakeFromNib
+{
+    [self initialSetup];
+}
+
+- (void)setupTextView
 {
     self.textView.delegate = self;
     self.textView.text = placeHolderString;
     self.textView.textColor =[UIColor lightGrayColor];
     self.textView.backgroundColor = [UIColor clearColor];
-    
+}
+
+- (void)setupImageEffectLabel
+{
     [self.imageEffectLabel setFont:[UIFont fontWithName:@"SegoeUI-Semilight" size:14.0]];
     self.imageEffectLabel.textColor = [UIColor whiteColor];
     self.imageEffectLabel.backgroundColor = [UIColor lightGrayColor];
     self.imageEffectLabel.hidden = YES;
-    
+}
+
+- (void)setupGestureRecognizer
+{
     DirectionalPanGestureRecognizer *panGRVertical = [[DirectionalPanGestureRecognizer alloc] initWithTarget:self action:@selector(pannedVertical:)];
     panGRVertical.direciton = DirectionalPanGestureRecognizerVertical;
-    panGRVertical.delegate = self;
     
     DirectionalPanGestureRecognizer *panGRHorizontal = [[DirectionalPanGestureRecognizer alloc] initWithTarget:self action:@selector(pannedHorizontal:)];
     panGRHorizontal.direciton = DirectionalPanGestureRecognizerHorizontal;
-    panGRHorizontal.delegate = self;
     [self.backgroundView addGestureRecognizer:panGRVertical];
     [self.backgroundView addGestureRecognizer:panGRHorizontal];
-    
 }
-
-/*
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-{
-    return YES;
-}
-*/
-/*
-- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)panGestureRecognizer {
-    CGPoint velocity = [panGestureRecognizer velocityInView:self];
-    return fabs(velocity.y) > fabs(velocity.x);
-}*/
 
 - (void)pannedVertical: (UIPanGestureRecognizer *)recognizer
 {
@@ -94,13 +113,21 @@ static NSString *placeHolderString = @"Description for this item";
     [self.delegate pannedHorizontal:recognizer];
 }
 
-- (id)initWithFrame:(CGRect)frame
+- (void)updateImageView
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-     }
-    return self;
+    self.imageView.image = [self.image applyBlurWithRadius:2.0 iterationsCount:self.blurValue tintColor:[UIColor colorWithWhite:0.11 alpha:self.darkenValue] saturationDeltaFactor:1.8 maskImage:nil];
+}
+
+- (CGRect)getFrameInView:(UIView *)view
+{
+    CGPoint convertedPoint = [self convertPoint:self.frame.origin toView:view];
+    return CGRectMake(convertedPoint.x, convertedPoint.y, self.frame.size.width, self.frame.size.height);
+}
+
+- (void) updateImageEffectLabelWithText: (NSString *)text hidden: (BOOL)hidden
+{
+    self.imageEffectLabel.text = text;
+    self.imageEffectLabel.hidden = hidden;
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView
@@ -140,4 +167,5 @@ shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
     
     return (numberOfLines < MAX_NUMBER_OF_LINES_ALLOWED);
 }
+
 @end

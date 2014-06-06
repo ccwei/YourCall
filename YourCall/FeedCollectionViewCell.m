@@ -17,51 +17,70 @@
 {
     if (_feed != feed) {
         _feed = feed;
+        [self updateFeedItemViews:feed];
     }
-    self.imageViewFirst.image = nil;
-    [self.activityIndicatorFirst startAnimating];
-    [feed getImageFirst:^(UIImage* image) {
-        self.imageViewFirst.image = image;
-        [self setNeedsDisplay];
-        [self.activityIndicatorFirst stopAnimating];
-    }];
+}
+
+- (void)updateFeedItemViews: (Feed *)feed
+{
+    for (int i = 0; i < feed.feedItems.count; i++) {
+        FeedItem *feedItem = [feed.feedItems objectAtIndex:i];
+        FeedItemView *feedItemView = [self.feedItemViews objectAtIndex:i];
+        [feedItemView.activityIndicator startAnimating];
+        feedItemView.imageView.image = nil;
+        [feedItem getImage:^(UIImage* image) {
+            feedItemView.imageView.image = image;
+            [self setNeedsDisplay];
+            [feedItemView.activityIndicator stopAnimating];
+        }];
+        feedItemView.descriptionTextView.text = feedItem.description;
+    }
+}
+
+- (void)setupFeedItemViews
+{
+    NSArray *bundleObjects;
+    FeedItemView *feedItemView;
+    NSMutableArray *tempViews = [NSMutableArray arrayWithCapacity:self.feedItemViews.count];
+    int index = 0;
+    for (UIView *currentWrapperView in self.feedItemViews) {
+        bundleObjects = [[NSBundle mainBundle] loadNibNamed:@"FeedItemView" owner:self options:nil];
+        for (id object in bundleObjects) {
+            if ([object isKindOfClass:[FeedItemView class]]){
+                feedItemView = (FeedItemView *)object;
+                break;
+            }
+        }
+        feedItemView.descriptionTextView.textColor = [UIColor whiteColor];
+        feedItemView.descriptionTextView.backgroundColor = [UIColor clearColor];
+        feedItemView.imageView.contentMode = UIViewContentModeScaleAspectFill;
+        
+        UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
+        [feedItemView addGestureRecognizer:tapGR];
+        
+        [currentWrapperView addSubview:feedItemView];
+        
+        [tempViews addObject:feedItemView];
+        index++;
+    }
+    self.feedItemViews = tempViews;
+}
+
+- (void)setupVoteImageView
+{
+    self.voteImageView.hidden = YES;
     
-    self.imageViewSecond.image = nil;
-    [self.activityIndicatorSecond startAnimating];
-    [feed getImageSecond:^(UIImage* image) {
-        self.imageViewSecond.image = image;
-        [self setNeedsDisplay];
-        [self.activityIndicatorSecond stopAnimating];
-    }];
-    
-    self.textViewFirst.text = feed.descriptionFirst;
-    self.textViewSecond.text = feed.descriptionSecond;
+    if (self.feedItemIndex == First) {
+        self.voteImageView.frame = CGRectMake(0, 0, 50, 50);
+    } else if (self.feedItemIndex == Second){
+        self.voteImageView.frame = CGRectMake(0, 220, 50, 50);
+    }
 }
 
 - (void)awakeFromNib
 {
-    _textViewFirst.textColor = [UIColor whiteColor];
-    _textViewFirst.backgroundColor = [UIColor clearColor];
- 
-    _textViewSecond.textColor = [UIColor whiteColor];
-    _textViewSecond.backgroundColor = [UIColor clearColor];
-    
-    _imageViewFirst.contentMode = UIViewContentModeScaleAspectFill;
-    _imageViewSecond.contentMode = UIViewContentModeScaleAspectFill;
-    
-    _voteImageView.hidden = YES;
-    
-    UITapGestureRecognizer *tapFirstGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedFirstImage:)];
-    UITapGestureRecognizer *tapSecondGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedSecondImage:)];
-    
-    [_firstView addGestureRecognizer:tapFirstGR];
-    [_secondView addGestureRecognizer:tapSecondGR];
-    
-    if (self.votedItem == First) {
-        self.voteImageView.frame = CGRectMake(0, 0, 50, 50);
-    } else if (self.votedItem == Second){
-        self.voteImageView.frame = CGRectMake(0, 220, 50, 50);
-    }
+    [self setupFeedItemViews];
+    [self setupVoteImageView];
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -73,23 +92,9 @@
     return self;
 }
 
-- (IBAction)tappedFirstImage:(UITapGestureRecognizer *)recognizer
+- (IBAction)tapped:(UITapGestureRecognizer *)recognizer
 {
-    [self.delegate tappedFirstImage:recognizer];
+    [self.delegate tapped:recognizer];
 }
-
-- (IBAction)tappedSecondImage:(UITapGestureRecognizer *)recognizer
-{
-    [self.delegate tappedSecondImage:recognizer];
-}
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end

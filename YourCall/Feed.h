@@ -8,24 +8,20 @@
 
 #import <Foundation/Foundation.h>
 #import "FeedService.h"
+#import "FeedItem.h"
 
 @interface Feed : NSObject
-typedef enum {None, First, Second} VoteItem;
+typedef enum {First, Second, None} FeedItemIndices;
 
-@property (nonatomic, strong) NSString* imageUrlFirst;
-@property (nonatomic, strong) UIImage* imageFirst;
-@property (nonatomic, strong) NSString* descriptionFirst;
-@property (nonatomic, strong) NSString* imageUrlSecond;
-@property (nonatomic, strong) UIImage* imageSecond;
-@property (nonatomic, strong) NSString* descriptionSecond;
-@property int numberOfVoteFirst;
-@property int numberOfVoteSecond;
-@property VoteItem votedItem;
+@property (nonatomic, strong, readonly) NSArray* feedItems;
+@property FeedItemIndices votedFeedItemIndex;
 @property int feedId;
 
-- (void) getImageFirst:(void(^)(UIImage*))completionBlock;
-- (void) getImageSecond:(void(^)(UIImage*))completionBlock;
-- (BOOL) voteFirst;
-- (BOOL) voteSecond;
++ (Feed *)createFeed:(NSDictionary *)feedData;
+
+- (FeedItemIndices) getToggledIndex: (FeedItemIndices) index;
+- (void) addFeedItem: (FeedItem *)feedItem;
+- (void) vote: (FeedItemIndices) feedItemIndex completionBlock:(void (^)())completionBlock;
+- (void) unvote: (FeedItemIndices) feedItemIndex completionBlock:(void (^)())completionBlock;
 - (void) save;
 @end

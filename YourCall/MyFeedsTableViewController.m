@@ -16,7 +16,7 @@
 
 - (void) awakeFromNib
 {
-    [[DataRepository sharedManager] myFeeds: ^(NSArray *feeds) {
+    [[DataRepository getInstance] myFeeds: ^(NSArray *feeds) {
         self.feeds = feeds;
         [self.tableView reloadData];
     }];
@@ -69,16 +69,18 @@
     
     voteFirstLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 80, 100, 100)];
     voteSecondLabel = [[UILabel alloc] initWithFrame:CGRectMake(150, 80, 100, 100)];
+    FeedItem *firstFeedItem = selectedFeed.feedItems[0];
+    FeedItem *secondFeedItem = selectedFeed.feedItems[1];
     
-    voteFirstLabel.text = [NSString stringWithFormat:@"%d", selectedFeed.numberOfVoteFirst];
-    voteSecondLabel.text = [NSString stringWithFormat:@"%d", selectedFeed.numberOfVoteSecond];
+    voteFirstLabel.text = [NSString stringWithFormat:@"%d", firstFeedItem.vote];
+    voteSecondLabel.text = [NSString stringWithFormat:@"%d", secondFeedItem.vote];
     
-    [selectedFeed getImageFirst:^(UIImage* image) {
+    [firstFeedItem getImage:^(UIImage *image) {
         firstImageView.image = image;
         [cell setNeedsDisplay];
     }];
     
-    [selectedFeed getImageSecond:^(UIImage* image) {
+    [secondFeedItem getImage:^(UIImage* image) {
         secondImageView.image = image;
         [cell setNeedsDisplay];
     }];

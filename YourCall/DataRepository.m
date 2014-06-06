@@ -20,15 +20,14 @@
     return self;
 }
 
-
-+ (DataRepository *)sharedManager
++ (DataRepository *)getInstance
 {
-    static DataRepository *sharedMyManager = nil;
+    static DataRepository *sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedMyManager = [[self alloc] init];
+        sharedInstance = [[self alloc] init];
     });
-    return sharedMyManager;
+    return sharedInstance;
 }
 
 - (void) allFeeds: (void (^)(NSArray *))completionBlock

@@ -28,7 +28,7 @@
 
 - (void) awakeFromNib
 {
-    [[DataRepository sharedManager] allFeeds: ^(NSArray *feeds) {
+    [[DataRepository getInstance] allFeeds: ^(NSArray *feeds) {
         self.feeds = feeds;
         [self.collectionView reloadData];
     }];
@@ -43,15 +43,19 @@
     return self;
 }
 
+- (void)registerCollectionViewCell
+{
+    UINib *cellNib = [UINib nibWithNibName:@"CollectionViewCell" bundle:nil];
+    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"Cell"];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UINib *cellNib = [UINib nibWithNibName:@"CollectionViewCell" bundle:nil];
-    [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"Cell"];
+    [self registerCollectionViewCell];
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     self.slidingViewController.delegate = self.zoomAnimationController;
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
@@ -59,17 +63,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 #pragma mark - UICollectionView Datasource
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
@@ -86,84 +79,67 @@
     return cell;
 }
 
-#pragma mark - UICollectionViewDelegate
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    // TODO: Select Item
-}
-
-- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    // TODO: Deselect item
-}
-
-
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return self.collectionView.frame.size;
 }
 
-
-- (void)tappedFirstImage:(UITapGestureRecognizer *)recognizer
+- (void)tapped:(UITapGestureRecognizer *)recognizer
 {
     CGPoint location = [recognizer locationInView:self.collectionView];
     NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:location];
     FeedCollectionViewCell *selectedCell = (FeedCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
     
-    if ([selectedCell.feed voteFirst]) {
-        selectedCell.imageViewFirst.layer.masksToBounds = YES;
-        [selectedCell.imageViewFirst.layer setBackgroundColor:[[UIColor redColor] CGColor]];
-        [selectedCell.imageViewFirst.layer setBorderWidth:4.0];
-        [selectedCell.imageViewSecond.layer setBorderWidth:0];
-        [UIView animateWithDuration:1.0f
-                              delay:0
-                            options:UIViewAnimationOptionBeginFromCurrentState
-                         animations:^{
-                             selectedCell.voteImageView.hidden = NO;
-                             selectedCell.voteImageView.frame = CGRectMake(0, 0, 50, 50);
-                         }
-                         completion:nil];
-        
+    FeedItemView *selectedView;
+    for (FeedItemView *feedItemView in selectedCell.feedItemViews) {
+        if (CGRectContainsPoint([feedItemView getFrameInView:self.collectionView], location)) {
+            selectedView = feedItemView;
+            break;
+        }
+    }
+    
+    int selectedFeedItemIndex = [selectedCell.feedItemViews indexOfObject:selectedView];
+    
+    if (selectedCell.feed.votedFeedItemIndex == None) {
+        [selectedCell.feed vote:selectedFeedItemIndex completionBlock:^{
+            [self updateVoteImage:selectedCell];
+        }];
     } else {
-        [selectedCell.imageViewFirst.layer setBorderWidth:0];
-        [UIView animateWithDuration:1.0f
-                              delay:0
-                            options:UIViewAnimationOptionBeginFromCurrentState
-                         animations:^{
-                             selectedCell.voteImageView.hidden = YES;
-                         }
-                         completion:nil];
+        if (selectedCell.feed.votedFeedItemIndex == selectedFeedItemIndex) {
+            [selectedCell.feed unvote:selectedFeedItemIndex completionBlock:^{
+                [self updateVoteImage:selectedCell];
+            }];
+        } else {
+            [selectedCell.feed unvote:[selectedCell.feed getToggledIndex:selectedFeedItemIndex] completionBlock:^{
+                [selectedCell.feed vote:selectedFeedItemIndex completionBlock:^{
+                    [self updateVoteImage:selectedCell];
+                }];
+            }];
+        }
     }
 }
 
-- (void)tappedSecondImage:(UITapGestureRecognizer *)recognizer
+- (void) updateVoteImage: (FeedCollectionViewCell *)selectedCell
 {
-    CGPoint location = [recognizer locationInView:self.collectionView];
-    NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:location];
-    FeedCollectionViewCell *selectedCell = (FeedCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-    if ([selectedCell.feed voteSecond]) {
-        selectedCell.imageViewSecond.layer.masksToBounds = YES;
-        [selectedCell.imageViewSecond.layer setBackgroundColor:[[UIColor redColor] CGColor]];
-        [selectedCell.imageViewSecond.layer setBorderWidth:4.0];
-        [selectedCell.imageViewFirst.layer setBorderWidth:0];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        if (selectedCell.feed.votedFeedItemIndex == None) {
+            selectedCell.voteImageView.hidden = YES;
+            return;
+        }
+        
+        FeedItemView *votedView = [selectedCell.feedItemViews objectAtIndex:selectedCell.feed.votedFeedItemIndex];
+        CGPoint origin = [votedView getFrameInView:self.view].origin;
         [UIView animateWithDuration:1.0f
                               delay:0
                             options:UIViewAnimationOptionBeginFromCurrentState
                          animations:^{
                              selectedCell.voteImageView.hidden = NO;
-                             selectedCell.voteImageView.frame = CGRectMake(0, 220, 50, 50);
+                             selectedCell.voteImageView.frame = CGRectMake(origin.x, origin.y, 50, 50);
                          }
                          completion:nil];
-    } else {
-        [selectedCell.imageViewSecond.layer setBorderWidth:0];
-        [UIView animateWithDuration:1.0f
-                              delay:0
-                            options:UIViewAnimationOptionBeginFromCurrentState
-                         animations:^{
-                             selectedCell.voteImageView.hidden = YES;
-                         }
-                         completion:nil];
-    }
+        
+    });
 }
 
 - (IBAction)unwindToFeedCollectionViewController:(UIStoryboardSegue *)unwindSegue
@@ -175,20 +151,20 @@
         if (vc.isCanceled) {
             return;
         }
-        FeedCompositionView *firstView = vc.feedCompositionViews[0];
-        FeedCompositionView *secondView = vc.feedCompositionViews[1];
-        
         Feed *feed = [[Feed alloc] init];
-        feed.imageFirst = firstView.imageView.image;
-        feed.imageSecond = secondView.imageView.image;
-        feed.descriptionFirst = firstView.textView.text;
-        feed.descriptionSecond = secondView.textView.text;
+        
+        for (FeedCompositionView *compositionView in vc.feedCompositionViews) {
+            FeedItem *feedItem = [[FeedItem alloc] init];
+            feedItem.image = compositionView.imageView.image;
+            feedItem.description = compositionView.textView.text;
+            [feed addFeedItem:feedItem];
+        }
         [feed save];
     }
-    
 }
+
 - (IBAction)refresh:(id)sender {
-    [[DataRepository sharedManager] allFeeds: ^(NSArray *feeds) {
+    [[DataRepository getInstance] allFeeds: ^(NSArray *feeds) {
         [self.collectionView reloadData];
     }];
 }

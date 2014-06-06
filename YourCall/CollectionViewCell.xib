@@ -16,48 +16,12 @@
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5fG-VF-gM0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="208"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jis-eG-EqJ">
-                                <rect key="frame" x="-80" y="0.0" width="480" height="208"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4bS-p6-MhT">
-                                <rect key="frame" x="40" y="40" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="thc-tS-9Rl">
-                                <rect key="frame" x="150" y="94" width="20" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </activityIndicatorView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                     </view>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YZ6-bF-ZCW">
                         <rect key="frame" x="0.0" y="208" width="320" height="208"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="irP-zq-WYx">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="208"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q5o-bI-M9A">
-                                <rect key="frame" x="40" y="40" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="O0p-xE-b3n">
-                                <rect key="frame" x="150" y="94" width="20" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </activityIndicatorView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                     </view>
@@ -70,15 +34,9 @@
             </view>
             <size key="customSize" width="385" height="308"/>
             <connections>
-                <outlet property="activityIndicatorFirst" destination="thc-tS-9Rl" id="ecC-Ya-7t8"/>
-                <outlet property="activityIndicatorSecond" destination="O0p-xE-b3n" id="qnL-ao-5qg"/>
-                <outlet property="firstView" destination="5fG-VF-gM0" id="zsU-Rf-dra"/>
-                <outlet property="imageViewFirst" destination="jis-eG-EqJ" id="ouh-bd-mKg"/>
-                <outlet property="imageViewSecond" destination="irP-zq-WYx" id="zcj-NB-9hk"/>
-                <outlet property="secondView" destination="YZ6-bF-ZCW" id="Zd4-Dr-Qrq"/>
-                <outlet property="textViewFirst" destination="4bS-p6-MhT" id="gyC-KQ-qBc"/>
-                <outlet property="textViewSecond" destination="q5o-bI-M9A" id="0RE-6A-Vo9"/>
                 <outlet property="voteImageView" destination="lHp-FT-DlP" id="1UG-5a-CO3"/>
+                <outletCollection property="feedItemViews" destination="5fG-VF-gM0" id="jcv-bT-gEi"/>
+                <outletCollection property="feedItemViews" destination="YZ6-bF-ZCW" id="DfK-3B-eGO"/>
             </connections>
         </collectionViewCell>
     </objects>
